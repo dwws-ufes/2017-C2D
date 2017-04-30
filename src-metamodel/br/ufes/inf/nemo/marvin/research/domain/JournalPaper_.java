@@ -4,7 +4,7 @@ import javax.annotation.Generated;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@Generated(value="Dali", date="2016-09-13T10:38:38.496-0300")
+@Generated(value="Dali", date="2017-04-29T14:30:37.328-0300")
 @StaticMetamodel(JournalPaper.class)
 public class JournalPaper_ extends Publication_ {
 	public static volatile SingularAttribute<JournalPaper, String> journal;
