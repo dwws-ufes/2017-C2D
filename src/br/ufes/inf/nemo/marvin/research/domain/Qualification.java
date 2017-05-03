@@ -1,14 +1,12 @@
-package br.ufes.inf.nemo.marvin.c2d.domain;
+package br.ufes.inf.nemo.marvin.research.domain;
 
-import java.util.Date;
 import java.util.Set;
 
+import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
 import br.ufes.inf.nemo.jbutler.ejb.persistence.PersistentObjectSupport;
@@ -23,10 +21,33 @@ public class Qualification extends PersistentObjectSupport {
 	@NotNull
 	private Qualis qualis;
 	
-	@OneToMany(cascade = CascadeType.ALL)
-	private Set<Venue> venues;
+	@ManyToOne
+	private Venue venue;
 	
-	@Temporal(TemporalType.DATE)
-	private Date year;
+	@Basic
+	private int year;
+
+	/** Getter for qualis. */
+	public Qualis getQualis() {
+		return qualis;
+	}
+
+	/** Setter for qualis. */
+	public void setQualis(Qualis qualis) {
+		this.qualis = qualis;
+	}
+
+
+	/** Getter for year. */
+	public int getYear() {
+		return year;
+	}
+
+	/** Setter for year. */
+	public void setYear(int year) {
+		this.year = year;
+	}
+	
+	
 	
 }

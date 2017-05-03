@@ -17,7 +17,7 @@
 		<li><h:link outcome="/core/login/index" rendered="#{coreInfo.systemInstalled and not sessionController.loggedIn}"><i class="fa fa-key"></i> <span><h:outputText value="#{msgsCore['core.menu.login']}" /></span></h:link></li>
 		
 		<!-- User management (Admins only). -->
-		<c:set var="menuOpen" value="#{request.requestURL.indexOf('/manageAcademics/') != -1}" />
+		<c:set var="menuOpen" value="#{request.requestURL.indexOf('/core/') != -1}" />
 		<h:panelGroup rendered="#{sessionController.admin}">
 			<li class="treeview #{menuOpen ? 'active' : ''}">
 				<a href="#"><i class="fa fa-users"></i> <span><h:outputText value="#{msgsCore['core.menu.generalSettings']}" /></span> <i class="fa fa-angle-left pull-right"></i></a>
@@ -37,6 +37,10 @@
 				<ul class="treeview-menu #{menuOpen ? 'menu-open' : ''}" style="display: #{menuOpen ? 'block' : 'none'};">
 					<li><h:link outcome="/research/uploadLattesCV/index"><h:outputText value="#{msgsResearch['core.menu.research.uploadLattesCV']}" /></h:link></li>
 					<li><h:link outcome="/research/generateBibliography/index"><h:outputText value="#{msgsResearch['core.menu.research.generateBibliography']}" /></h:link></li>
+					<!-- TODO: Change links to appropriate paths. -->
+					<li><h:link outcome="/research/importQualisData/index"><h:outputText value="#{msgsResearch['core.menu.research.importQualisData']}" /></h:link></li>
+					<li><h:link outcome="/core/manageAcademics/list"><h:outputText value="#{msgsResearch['core.menu.research.createNewScoreSystem']}" /></h:link></li>
+					<li><h:link outcome="/core/manageAcademics/list"><h:outputText value="#{msgsResearch['core.menu.research.calculateAcademicsScore']}" /></h:link></li>
 				</ul>
 			</li>
 		</h:panelGroup>

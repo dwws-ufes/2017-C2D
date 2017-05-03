@@ -1,5 +1,6 @@
-package br.ufes.inf.nemo.marvin.c2d.domain;
+package br.ufes.inf.nemo.marvin.research.domain;
 
+import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -7,51 +8,42 @@ import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
 import br.ufes.inf.nemo.jbutler.ejb.persistence.PersistentObjectSupport;
+import br.ufes.inf.nemo.marvin.research.domain.Venue.Category;
 
 @Entity
-public class Venue extends PersistentObjectSupport {
+public class Score extends PersistentObjectSupport {
 
-	/** Serialization id. */
+	/**
+	 * 
+	 */
 	private static final long serialVersionUID = 1L;
+	
+	@ManyToOne
+	@NotNull
+	private Qualis qualis;
 
 	@ManyToOne
 	@NotNull
-	private Qualification qualification;
-	
-	@Enumerated(EnumType.STRING)
-	@NotNull
-	private Scope scope;
+	private ScoreSystem scoreSystem;
 	
 	@Enumerated(EnumType.STRING)
 	@NotNull
 	private Category category;
 	
-	/** Getter for qualification. */
-	public Qualification getQualification() {
-		return qualification;
+	@Basic
+	private int nationalScore;
+	
+	@Basic
+	private int internationalScore;
+
+	public Qualis getQualis() {
+		return qualis;
 	}
 
-	/** Setter for qualification. */
-	public void setQualification(Qualification qualification) {
-		this.qualification = qualification;
-	}
-
-	/** Getter for scope. */
-	public Scope getScope() {
-		return scope;
-	}
-
-	/** Setter for scope. */
-	public void setScope(Scope scope) {
-		this.scope = scope;
+	public void setQualis(Qualis qualis) {
+		this.qualis = qualis;
 	}
 	
-	/** Setter for scope. */
-	public void setScope(String scope) {
-		if (scope.equals("International")) this.scope = Scope.INTERNATIONAL;
-		else this.scope = Scope.NATIONAL;
-	}
-
 	/** Getter for category. */
 	public Category getCategory() {
 		return category;
@@ -67,28 +59,30 @@ public class Venue extends PersistentObjectSupport {
 		if (category.equals("Conference")) this.category = Category.CONFERENCE;
 		else this.category = Category.JOURNAL;
 	}
-	
-	/** Venue scope */
-	public enum Scope {
-		INTERNATIONAL("International"),
-		NATIONAL("National");
-		
-		String name;
-		
-		/** Getter for category name. */		
-		public String getName() {
-			return name;
-		}
 
-		/** Setter for category name. */
-		public void setName(String name) {
-			this.name = name;
-		}
+	public ScoreSystem getScoreSystem() {
+		return scoreSystem;
+	}
 
-		Scope(String name) {
-			this.name = name;
-		}
-	}	
+	public void setScoreSystem(ScoreSystem scoreSystem) {
+		this.scoreSystem = scoreSystem;
+	}
+
+	public int getNationalScore() {
+		return nationalScore;
+	}
+
+	public void setNationalScore(int nationalScore) {
+		this.nationalScore = nationalScore;
+	}
+
+	public int getInternationalScore() {
+		return internationalScore;
+	}
+
+	public void setInternationalScore(int internationalScore) {
+		this.internationalScore = internationalScore;
+	}
 	
 	/** Venue category */
 	public enum Category {

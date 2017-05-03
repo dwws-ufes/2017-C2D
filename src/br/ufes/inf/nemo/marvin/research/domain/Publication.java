@@ -51,6 +51,10 @@ public abstract class Publication extends PersistentObjectSupport implements Com
 	@ManyToOne
 	@NotNull
 	private Academic owner;
+	
+	/** TODO: document this field. */
+	@ManyToOne
+	private Venue venue;
 
 	/** TODO: document this field. */
 	@ElementCollection

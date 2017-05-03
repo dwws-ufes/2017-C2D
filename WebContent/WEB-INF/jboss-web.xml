@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jboss-web>
-	<security-domain>marvin</security-domain>
+	<security-domain>c2d</security-domain>
 </jboss-web>

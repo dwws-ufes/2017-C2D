@@ -1,4 +1,4 @@
-package br.ufes.inf.nemo.marvin.c2d.domain;
+package br.ufes.inf.nemo.marvin.research.domain;
 
 import java.util.Date;
 import java.util.Set;
@@ -18,7 +18,7 @@ public class ScoreSystem extends PersistentObjectSupport {
 	/** Serialization id. */
 	private static final long serialVersionUID = 1L;
 
-	@OneToMany(cascade = CascadeType.ALL)
+	@OneToMany(cascade = CascadeType.ALL, mappedBy="scoreSystem")
 	private Set<Score> scores;
 	
 	@Temporal(TemporalType.TIMESTAMP)
@@ -27,4 +27,30 @@ public class ScoreSystem extends PersistentObjectSupport {
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date endDate;
+
+	public Set<Score> getScores() {
+		return scores;
+	}
+
+	public void setScores(Set<Score> scores) {
+		this.scores = scores;
+	}
+
+	public Date getStartDate() {
+		return startDate;
+	}
+
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
+	}
+
+	public Date getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
+	}
+	
+	
 }

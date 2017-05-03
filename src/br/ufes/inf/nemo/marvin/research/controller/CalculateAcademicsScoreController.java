@@ -1,4 +1,4 @@
-package br.ufes.inf.nemo.marvin.c2d.controller;
+package br.ufes.inf.nemo.marvin.research.controller;
 
 public class CalculateAcademicsScoreController {
 

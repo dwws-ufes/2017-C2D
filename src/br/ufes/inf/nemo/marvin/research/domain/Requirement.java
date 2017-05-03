@@ -1,4 +1,4 @@
-package br.ufes.inf.nemo.marvin.c2d.domain;
+package br.ufes.inf.nemo.marvin.research.domain;
 
 import java.util.Date;
 
