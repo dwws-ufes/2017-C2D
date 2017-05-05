@@ -7,7 +7,7 @@ import javax.persistence.metamodel.SetAttribute;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@Generated(value="Dali", date="2017-05-02T18:07:27.654-0300")
+@Generated(value="Dali", date="2017-05-04T16:30:57.087-0300")
 @StaticMetamodel(ScoreSystem.class)
 public class ScoreSystem_ extends PersistentObjectSupport_ {
 	public static volatile SetAttribute<ScoreSystem, Score> scores;

@@ -6,7 +6,7 @@ import javax.persistence.metamodel.SetAttribute;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@Generated(value="Dali", date="2017-05-02T18:07:27.638-0300")
+@Generated(value="Dali", date="2017-05-04T19:24:10.688-0300")
 @StaticMetamodel(Qualis.class)
 public class Qualis_ extends PersistentObjectSupport_ {
 	public static volatile SingularAttribute<Qualis, String> level;
