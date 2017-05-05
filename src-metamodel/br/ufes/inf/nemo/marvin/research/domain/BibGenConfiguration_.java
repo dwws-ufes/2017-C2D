@@ -6,7 +6,7 @@ import javax.persistence.metamodel.SetAttribute;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@Generated(value="Dali", date="2017-04-29T14:30:37.255-0300")
+@Generated(value="Dali", date="2017-05-04T16:30:56.759-0300")
 @StaticMetamodel(BibGenConfiguration.class)
 public class BibGenConfiguration_ extends PersistentObjectSupport_ {
 	public static volatile SingularAttribute<BibGenConfiguration, String> name;

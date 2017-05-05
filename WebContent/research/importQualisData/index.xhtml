@@ -25,11 +25,11 @@
 			<ui:decorate template="/WEB-INF/decorators/#{coreInfo.decorator}/formfield.xhtml">
 				<ui:param name="fieldName" value="file" />
 				<ui:param name="label" value="#{msgsResearch['importQualisData.field.file']}" />
-				<p:fileUpload id="file" value="#{uploadLattesCVController.file}" mode="simple" skinSimple="true" required="true" />
+				<p:fileUpload id="file" value="#{importQualisDataController.file}" mode="simple" skinSimple="true" required="true" />
 			</ui:decorate>
 
 			<ui:decorate template="/WEB-INF/decorators/#{coreInfo.decorator}/formbuttonpanel-01.xhtml">
-				<p:commandButton ajax="false" action="#{uploadLattesCVController.upload}" value="#{msgsResearch['importQualisData.button.upload']}" icon="fa fa-fw fa-save" />
+				<p:commandButton ajax="false" action="#{importQualisDataController.upload}" value="#{msgsResearch['importQualisData.button.upload']}" icon="fa fa-fw fa-save" />
 			</ui:decorate>
 		</ui:decorate>
 	</ui:define>

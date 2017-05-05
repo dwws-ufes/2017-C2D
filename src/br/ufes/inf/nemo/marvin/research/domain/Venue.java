@@ -17,31 +17,26 @@ public class Venue extends PersistentObjectSupport {
 
 	/** Serialization id. */
 	private static final long serialVersionUID = 1L;
-
-	@OneToMany(mappedBy="venue")
-	@NotNull
-	private Set<Qualification> qualifications;
 	
-	@OneToMany(mappedBy="venue")
-	private Set<Publication> publications;
+	@NotNull
+	private String name;
 	
 	@Enumerated(EnumType.STRING)
 	@NotNull
 	private Category category;
-
-	/** Getter for qualifications. */	
-	public Set<Qualification> getQualifications() {
-		return qualifications;
-	}
-
-	/** Setter for qualifications. */
-	public void setQualifications(Set<Qualification> qualifications) {
-		this.qualifications = qualifications;
+	
+	protected Venue () {}
+	
+	public Venue(String name) {
+		// TODO Auto-generated constructor stub
 	}
 	
-	public void assignQualification(Qualification qualification) {
-		if (this.qualifications == null) this.qualifications = new HashSet<>();
-		qualifications.add(qualification);
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	/** Getter for category. */
@@ -58,27 +53,6 @@ public class Venue extends PersistentObjectSupport {
 	public void setCategory(String category) {
 		if (category.equals("Conference")) this.category = Category.CONFERENCE;
 		else this.category = Category.JOURNAL;
-	}
-	
-	/** Getter for publications. */
-	public Set<Publication> getPublications() {
-		return publications;
-	}
-
-	/** Setter for publications. */
-	public void setPublications(Set<Publication> publications) {
-		this.publications = publications;
-	}
-	
-	/**
-	 * Assigns a publication to a venue, i.e., adds the publication to the set of publications.
-	 * 
-	 * @param publication
-	 *          The publication to assign.
-	 */
-	public void assignPublication(Publication publication) {
-		if (publications == null) publications = new HashSet<>();
-		publications.add(publication);
 	}
 	
 	/** Venue category */
