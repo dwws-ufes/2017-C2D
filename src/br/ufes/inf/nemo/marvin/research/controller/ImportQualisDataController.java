@@ -1,9 +1,12 @@
 package br.ufes.inf.nemo.marvin.research.controller;
 
 import java.io.IOException;
+import java.util.Map;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.Conversation;
 import javax.enterprise.context.ConversationScoped;
@@ -15,7 +18,9 @@ import org.primefaces.model.UploadedFile;
 
 import br.ufes.inf.nemo.jbutler.ejb.controller.JSFController;
 import br.ufes.inf.nemo.marvin.research.application.ImportQualisDataService;
+import br.ufes.inf.nemo.marvin.research.application.QualifiedVenue;
 import br.ufes.inf.nemo.marvin.research.exceptions.CSVParseException;
+import br.ufes.inf.nemo.marvin.research.exceptions.QualisLevelNotRegisteredException;
 
 @Named
 @ConversationScoped
@@ -27,7 +32,7 @@ public class ImportQualisDataController extends JSFController {
 	private static final long serialVersionUID = 1L;
 	
 	/** The logger. */
-	private static final Logger logger = Logger.getLogger(UploadLattesCVController.class.getCanonicalName());
+	private static final Logger logger = Logger.getLogger(ImportQualisDataController.class.getCanonicalName());
 	
 	/** Path to the folder where the view files (web pages) for this action are placed. */
 	private static final String VIEW_PATH = "/research/importQualisData/";
@@ -43,10 +48,17 @@ public class ImportQualisDataController extends JSFController {
 	/** TODO: document this field. */
 	private UploadedFile file;
 	
-	private boolean isConference;
+	private String category;
 	
 	private int year;
 
+	private Set<QualifiedVenue> qualifiedVenues;
+	
+	
+	public Set<QualifiedVenue> getQualifiedVenues() {
+		return qualifiedVenues;
+	}
+	
 	/**
 	 * @return the file
 	 */
@@ -65,31 +77,56 @@ public class ImportQualisDataController extends JSFController {
 		return year;
 	}
 
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
+	}
+
 	public void setYear(int year) {
 		this.year = year;
 	}
-
-	public boolean isConference() {
-		return isConference;
+	
+	@PostConstruct
+	public void init() {
+		category = "Conference";
 	}
 
-	public void setConference(boolean isConference) {
-		this.isConference = isConference;
-	}
 
 	public String upload() {
 		if (conversation.isTransient()) conversation.begin();
 		
 		try {
-			importQualisDataService.importQualisData(file.getInputstream());
+			qualifiedVenues = importQualisDataService.importQualisData(file.getInputstream(), category);
+		}
+		catch (QualisLevelNotRegisteredException e) {
+			logger.log(Level.INFO, "Qualis level in the CSV file is not registered in the system.");
+			addGlobalI18nMessage("msgsResearch", FacesMessage.SEVERITY_WARN, "importQualisData.error.qualisLevelNotRegisteredError.summary", new Object[] {}, "importQualisData.error.qualisLevelNotRegisteredError.detail", new Object[] {e.getLevel()});
+			return null;			
 		}
 		catch (IOException | CSVParseException e) {
 			logger.log(Level.INFO, "CSV parser error.");
 			addGlobalI18nMessage("msgsResearch", FacesMessage.SEVERITY_ERROR, "importQualisData.error.CSVParseError.summary", "importQualisData.error.CSVParseError.detail");
 			return null;
 		}
-		return VIEW_PATH + "success.xhtml?faces-redirect=true";
+		return VIEW_PATH + "list.xhtml?faces-redirect=true";
 	}
 	
+	public String cancel() {
+		// Ends the conversation and redirects back to the beginning.
+		if (!conversation.isTransient()) conversation.end();
+		return VIEW_PATH + "index.xhtml?faces-redirect=true";
+	}
 
+	public String confirm() {
+		//Assign the qualifications to the Venues
+		importQualisDataService.assignQualificationsToVenues(qualifiedVenues, year);
+		
+		// Ends the conversation and renders a result page.
+		if (!conversation.isTransient()) conversation.end();
+		return VIEW_PATH + "success.xhtml";
+	}
+	
 }

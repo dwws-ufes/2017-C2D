@@ -31,7 +31,7 @@ public class CSVParser {
 			venuesMap = new HashMap<String,String>();
 			while (line != null) {
 				String[] values = line.split(csvSplitBy);
-				venuesMap.put(values[0].toLowerCase(), values[2].toLowerCase());
+				venuesMap.put(values[0], values[2]);
 				line = reader.readLine();
 			}
 

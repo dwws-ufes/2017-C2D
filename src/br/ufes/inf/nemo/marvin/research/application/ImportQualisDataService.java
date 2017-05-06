@@ -2,10 +2,17 @@ package br.ufes.inf.nemo.marvin.research.application;
 
 import java.io.InputStream;
 import java.io.Serializable;
+import java.util.Map;
+import java.util.Set;
 
 import javax.ejb.Local;
 
+import br.ufes.inf.nemo.jbutler.ejb.persistence.exceptions.MultiplePersistentObjectsFoundException;
+import br.ufes.inf.nemo.jbutler.ejb.persistence.exceptions.PersistentObjectNotFoundException;
+import br.ufes.inf.nemo.marvin.research.domain.Qualis;
+import br.ufes.inf.nemo.marvin.research.domain.Venue;
 import br.ufes.inf.nemo.marvin.research.exceptions.CSVParseException;
+import br.ufes.inf.nemo.marvin.research.exceptions.QualisLevelNotRegisteredException;
 
 @Local
 public interface ImportQualisDataService extends Serializable {
@@ -16,8 +23,13 @@ public interface ImportQualisDataService extends Serializable {
 	 * @param inputStream
 	 * @return
 	 * @throws CSVParseException
+	 * @throws MultiplePersistentObjectsFoundException 
+	 * @throws PersistentObjectNotFoundException 
+	 * @throws CSVInvalidQualisException 
 	 */
-	boolean importQualisData(InputStream inputStream) throws CSVParseException;
+	Set<QualifiedVenue> importQualisData(InputStream inputStream, String category) throws CSVParseException, QualisLevelNotRegisteredException;
+
+	void assignQualificationsToVenues(Set<QualifiedVenue> qualifiedVenues, int year);
 
 	
 }

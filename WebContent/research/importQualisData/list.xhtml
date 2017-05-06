@@ -9,16 +9,12 @@
                 xmlns:jsf="http://xmlns.jcp.org/jsf"
                 template="/WEB-INF/decorators/#{coreInfo.decorator}/decorator.xhtml">
 
-	<ui:define name="title"><h:outputText value="#{msgsResearch['uploadLattesCV.title']}" /></ui:define>
+	<ui:define name="title"><h:outputText value="#{msgsResearch['importQualisData.title']}" /></ui:define>
     
-    <ui:define name="description"><h:outputText value="#{msgsResearch['uploadLattesCV.title.description']}" /></ui:define>
+    <ui:define name="description"><h:outputText value="#{msgsResearch['importQualisData.title.description']}" /></ui:define>
 
 	<ui:define name="body">
-		<p><h:outputFormat value="#{msgsResearch['uploadLattesCV.text.instructions.confirm']}">
-			<f:param value="#{uploadLattesCVController.researcher.name}" />
-			<f:param value="#{uploadLattesCVController.previousQuantity}" />
-			<f:param value="#{uploadLattesCVController.publications.size()}" />
-		</h:outputFormat></p>
+		<p><h:outputText value="#{msgsResearch['importQualisData.text.instructions.confirm']}"/></p>
 	
 		<!-- The listing form. -->
 		<ui:decorate template="/WEB-INF/decorators/#{coreInfo.decorator}/form-nobox.xhtml">
@@ -26,25 +22,18 @@
 
 			<p:dataTable
 				widgetVar="listingTable"
-				value="#{uploadLattesCVController.publications}" 
-				var="entity" 
-				selectionMode="single" 
-				selection="#{uploadLattesCVController.selectedPublication}" 
-				rowKey="#{entity.uuid}"
-				emptyMessage="#{msgsResearch['uploadLattesCV.text.noPublications']}"
+				value="#{importQualisDataController.qualifiedVenues}" 
+				var="qualifiedVenue" 
+				rowKey="#{qualifiedVenue.venue.uuid}"
+				emptyMessage="#{msgsResearch['importQualisData.text.noQualifiedVenues']}"
 				reflow="true">
-
-				<p:column headerText="#{msgsResearch['uploadLattesCV.field.type']}" styleClass="ui-grid-col-2">
-					<c:set var="typeKey" value="uploadLattesCV.field.type.#{entity.class.simpleName.toLowerCase()}" />
-					<h:outputText value="#{msgsResearch[typeKey]}" />
+				
+				<p:column headerText="#{msgsResearch['importQualisData.field.venue']}" styleClass="ui-grid-col-9">
+					<h:outputText value="#{qualifiedVenue.venue.name}" />
 				</p:column>
 
-				<p:column headerText="#{msgsResearch['uploadLattesCV.field.title']}" styleClass="ui-grid-col-9">
-					<h:outputText value="#{entity.title}" />
-				</p:column>
-
-				<p:column headerText="#{msgsResearch['uploadLattesCV.field.year']}" styleClass="ui-grid-col-1">
-					<h:outputText value="#{entity.year}" />
+				<p:column headerText="#{msgsResearch['importQualisData.field.qualis']}" styleClass="ui-grid-col-1">
+					<h:outputText value="#{qualifiedVenue.qualis.level}" />
 				</p:column>
 
 				<!-- p:ajax event="rowSelect" update=":listingForm:buttonsGroup" / -->
@@ -54,8 +43,8 @@
 			<!-- Buttons shown below the listing. -->
 			<h:panelGroup id="buttonsGroup">
 				<ui:decorate template="/WEB-INF/decorators/#{coreInfo.decorator}/formbuttonpanel-02.xhtml">
-					<p:commandButton ajax="false" action="#{uploadLattesCVController.cancel}" value="#{msgsResearch['uploadLattesCV.button.cancel']}" icon="fa fa-fw fa-ban" />
-					<p:commandButton ajax="false" action="#{uploadLattesCVController.confirm}" value="#{msgsResearch['uploadLattesCV.button.confirm']}" icon="fa fa-fw fa-check" />
+					<p:commandButton ajax="false" action="#{importQualisDataController.cancel}" value="#{msgsResearch['importQualisData.button.cancel']}" icon="fa fa-fw fa-ban" />
+					<p:commandButton ajax="false" action="#{importQualisDataController.confirm}" value="#{msgsResearch['importQualisData.button.confirm']}" icon="fa fa-fw fa-check" />
 				</ui:decorate>
 			</h:panelGroup>
 		</ui:decorate>

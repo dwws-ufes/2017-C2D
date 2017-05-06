@@ -27,8 +27,10 @@ public class Venue extends PersistentObjectSupport {
 	
 	protected Venue () {}
 	
-	public Venue(String name) {
+	public Venue(String name, String category) {
 		// TODO Auto-generated constructor stub
+		this.name = name;
+		setCategory(category);
 	}
 	
 	public String getName() {

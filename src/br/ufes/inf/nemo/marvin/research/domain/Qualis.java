@@ -19,12 +19,6 @@ public class Qualis extends PersistentObjectSupport {
 	@NotNull
 	private String level;
 	
-	@OneToMany(cascade = CascadeType.ALL, mappedBy="qualis")
-	private Set<Qualification> qualifications;
-	
-	@OneToMany(cascade = CascadeType.ALL, mappedBy="qualis")
-	private Set<Score> scores;
-
 	/**Default Constructor*/
 	protected Qualis(){}
 	
@@ -41,26 +35,6 @@ public class Qualis extends PersistentObjectSupport {
 	/** Setter for level. */
 	public void setLevel(String level) {
 		this.level = level;
-	}
-
-	/** Getter for qualifications. */
-	public Set<Qualification> getQualifications() {
-		return qualifications;
-	}
-
-	/** Setter for qualifications. */
-	public void setQualifications(Set<Qualification> qualifications) {
-		this.qualifications = qualifications;
-	}
-
-	/** Getter for scores. */	
-	public Set<Score> getScores() {
-		return scores;
-	}
-
-	/** Setter for scores. */
-	public void setScores(Set<Score> scores) {
-		this.scores = scores;
 	}
 	
 	

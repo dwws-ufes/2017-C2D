@@ -1,12 +1,8 @@
 package br.ufes.inf.nemo.marvin.research.domain;
 
-import java.util.Set;
-
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
 import br.ufes.inf.nemo.jbutler.ejb.persistence.PersistentObjectSupport;
@@ -27,6 +23,14 @@ public class Qualification extends PersistentObjectSupport {
 	@Basic
 	private int year;
 
+	protected Qualification() {}
+	
+	public Qualification(int year, Qualis qualis, Venue venue) {
+		this.qualis = qualis;
+		this.venue = venue;
+		this.year = year;
+	}
+	
 	/** Getter for qualis. */
 	public Qualis getQualis() {
 		return qualis;
