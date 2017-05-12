@@ -13,61 +13,43 @@
 
   	<ui:define name="body">
 		<p><h:outputText value="#{msgsCore['login.text.instructions']}" /></p>
-
 		<!-- The form to be filled with authentication information. -->
 		<ui:decorate template="/WEB-INF/decorators/#{coreInfo.decorator}/form.xhtml">
 			<ui:param name="formName" value="form" />
 			<ui:param name="formLabel" value="#{msgsResearch['createNewScoreSystem.title']}" />
 			<p:focus />
 
-			<p:panelGrid class="ui-noborder">
-				<f:facet name="header">
-					<p:row>
-						<p:column><p:textOutput value="#{msgsResearch[createNewScoreSystem.field.journal]}"/></p:column>
-						<p:column><p:textOutput value="#{msgsResearch[createNewScoreSystem.field.conference]}"/></p:column>
-					</p:row>
-				</f:facet>
-				<p:row>
-					<p:column>
-						<ui:decorate template="/WEB-INF/decorators/#{coreInfo.decorator}/formfield.xhtml">
-							<ui:param name="fieldName" value="a1-journal" />
-							<ui:param name="label" value="#{msgsCore['login.field.email']}" />
-							<p:inputText id="a1-journal" value="#{sessionController.email}" required="true" pt:placeholder="#{msgsCore['login.field.email.placeholder']}">
-								<f:ajax event="blur" render="emailField" />
-							</p:inputText>
-						</ui:decorate>
-					</p:column>
-					<p:column>
-						<ui:decorate template="/WEB-INF/decorators/#{coreInfo.decorator}/formfield.xhtml">
-							<ui:param name="fieldName" value="a1-conf" />
-							<ui:param name="label" value="#{msgsCore['login.field.email']}" />
-							<p:inputText id="a1-conf" value="#{sessionController.email}" required="true" pt:placeholder="#{msgsCore['login.field.email.placeholder']}">
-								<f:ajax event="blur" render="emailField" />
-							</p:inputText>
-						</ui:decorate>
-					</p:column>
-				</p:row>
-				<p:row>
-					<p:column>
-						<ui:decorate template="/WEB-INF/decorators/#{coreInfo.decorator}/formfield.xhtml">
-							<ui:param name="fieldName" value="a2-journal" />
-							<ui:param name="label" value="#{msgsCore['login.field.email']}" />
-							<p:inputText id="a2-journal" value="#{sessionController.email}" required="true" pt:placeholder="#{msgsCore['login.field.email.placeholder']}">
-								<f:ajax event="blur" render="emailField" />
-							</p:inputText>
-						</ui:decorate>
-					</p:column>
-					<p:column>
-						<ui:decorate template="/WEB-INF/decorators/#{coreInfo.decorator}/formfield.xhtml">
-							<ui:param name="fieldName" value="a2-conf" />
-							<ui:param name="label" value="#{msgsCore['login.field.email']}" />
-							<p:inputText id="a2-conf" value="#{sessionController.email}" required="true" pt:placeholder="#{msgsCore['login.field.email.placeholder']}">
-								<f:ajax event="blur" render="emailField" />
-							</p:inputText>
-						</ui:decorate>
-					</p:column>
-				</p:row>
-			</p:panelGrid>
+			<p:dataTable 
+				var="entity"
+				widgetVar="cellScore"
+				value="#{createNewScoreSystemController.scores}" 
+				editable="true" 
+				editMode="cell" 
+				>
+				<p:column headerText="#{msgsResearch[createNewScoreSystem.field.qualis]}">
+				    <h:outputText value="#{entity.qualis.level}" />				    
+				</p:column>
+				<p:column headerText="#{msgsResearch[createNewScoreSystem.field.journal]}">
+					<p:cellEditor>
+				    <f:facet name="output">
+				    	<h:outputText value="#{entity.scoreJournal}" />
+				    </f:facet>
+               	   <f:facet name="input">
+               	   		<p:inputText value="#{entity.scoreJournal}" />
+               	   </f:facet>
+               	   </p:cellEditor>
+				</p:column>
+				<p:column headerText="#{msgsResearch[createNewScoreSystem.field.conference]}">
+					<p:cellEditor>
+				    <f:facet name="output">
+				    	<h:outputText value="#{entity.scoreConference}" />
+				    </f:facet>
+               	   <f:facet name="input">
+               	   		<p:inputText value="#{entity.scoreConference}" />
+               	   </f:facet>
+               	   </p:cellEditor>
+				</p:column>
+			</p:dataTable>
 			<ui:decorate template="/WEB-INF/decorators/#{coreInfo.decorator}/formbuttonpanel-04.xhtml">
 				<p:commandButton id="loginButton" action="#{sessionController.login}" value="#{msgsCore['login.button.login']}" update=":globalMessages form" icon="fa fa-fw fa-save" />
 				<p:defaultCommand target="loginButton" />

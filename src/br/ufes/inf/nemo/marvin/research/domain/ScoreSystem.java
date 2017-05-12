@@ -27,6 +27,12 @@ public class ScoreSystem extends PersistentObjectSupport {
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date endDate;
+	
+	protected ScoreSystem() {}
+	
+	public ScoreSystem(Date startDate) {
+		this.startDate = startDate;
+	}
 
 	public Set<Score> getScores() {
 		return scores;

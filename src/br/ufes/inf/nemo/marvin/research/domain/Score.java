@@ -2,13 +2,10 @@ package br.ufes.inf.nemo.marvin.research.domain;
 
 import javax.persistence.Basic;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
 import br.ufes.inf.nemo.jbutler.ejb.persistence.PersistentObjectSupport;
-import br.ufes.inf.nemo.marvin.research.domain.Venue.Category;
 
 @Entity
 public class Score extends PersistentObjectSupport {
@@ -26,15 +23,19 @@ public class Score extends PersistentObjectSupport {
 	@NotNull
 	private ScoreSystem scoreSystem;
 	
-	@Enumerated(EnumType.STRING)
+	@Basic
 	@NotNull
-	private Category category;
+	private int scoreConference;
 	
 	@Basic
-	private int nationalScore;
+	@NotNull
+	private int scoreJournal;
 	
-	@Basic
-	private int internationalScore;
+	protected Score() {}
+	
+	public Score(Qualis qualis) {
+		this.qualis = qualis;
+	}
 
 	public Qualis getQualis() {
 		return qualis;
@@ -42,22 +43,6 @@ public class Score extends PersistentObjectSupport {
 
 	public void setQualis(Qualis qualis) {
 		this.qualis = qualis;
-	}
-	
-	/** Getter for category. */
-	public Category getCategory() {
-		return category;
-	}
-
-	/** Setter for category. */
-	public void setCategory(Category category) {
-		this.category = category;
-	}
-	
-	/** Setter for category. */
-	public void setCategory(String category) {
-		if (category.equals("Conference")) this.category = Category.CONFERENCE;
-		else this.category = Category.JOURNAL;
 	}
 
 	public ScoreSystem getScoreSystem() {
@@ -68,42 +53,22 @@ public class Score extends PersistentObjectSupport {
 		this.scoreSystem = scoreSystem;
 	}
 
-	public int getNationalScore() {
-		return nationalScore;
+	public int getScoreConference() {
+		return scoreConference;
 	}
 
-	public void setNationalScore(int nationalScore) {
-		this.nationalScore = nationalScore;
+	public void setScoreConference(int scoreConference) {
+		this.scoreConference = scoreConference;
 	}
 
-	public int getInternationalScore() {
-		return internationalScore;
+	public int getScoreJournal() {
+		return scoreJournal;
 	}
 
-	public void setInternationalScore(int internationalScore) {
-		this.internationalScore = internationalScore;
+	public void setScoreJournal(int scoreJournal) {
+		this.scoreJournal = scoreJournal;
 	}
+
 	
-	/** Venue category */
-	public enum Category {
-		JOURNAL("Journal"),
-		CONFERENCE("Conference");
-		
-		String name;
-		
-		/** Getter for category name. */		
-		public String getName() {
-			return name;
-		}
-
-		/** Setter for category name. */
-		public void setName(String name) {
-			this.name = name;
-		}
-
-		Category(String name) {
-			this.name = name;
-		}
-	}
 	
 }
