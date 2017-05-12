@@ -17,14 +17,14 @@
 		<!-- The form to be filled with authentication information. -->
 		<ui:decorate template="/WEB-INF/decorators/#{coreInfo.decorator}/form.xhtml">
 			<ui:param name="formName" value="form" />
-			<ui:param name="formLabel" value="#{msgsCore['login.form']}" />
+			<ui:param name="formLabel" value="#{msgsResearch['createNewScoreSystem.title']}" />
 			<p:focus />
 
 			<p:panelGrid class="ui-noborder">
 				<f:facet name="header">
 					<p:row>
-						<p:column>Journal</p:column>
-						<p:column>Conference</p:column>
+						<p:column><p:textOutput value="#{msgsResearch[createNewScoreSystem.field.journal]}"/></p:column>
+						<p:column><p:textOutput value="#{msgsResearch[createNewScoreSystem.field.conference]}"/></p:column>
 					</p:row>
 				</f:facet>
 				<p:row>

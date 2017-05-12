@@ -28,9 +28,7 @@ import br.ufes.inf.nemo.marvin.research.persistence.VenueDAO;
 @RolesAllowed("SysAdmin")
 public class ImportQualisDataServiceBean implements ImportQualisDataService {
 
-	/**
-	 * 
-	 */
+	/** Serialization id. */
 	private static final long serialVersionUID = 1L;
 
 	/** The logger. */
@@ -55,7 +53,7 @@ public class ImportQualisDataServiceBean implements ImportQualisDataService {
 		return qualifiedVenues;
 	}
 
-	private Set<QualifiedVenue> verifyParsedData(Map<String, String> parsedData, String category)
+	private Set<QualifiedVenue> verifyParsedData(Map<Venue, String> parsedData, String category)
 			throws QualisLevelNotRegisteredException {
 		//Creates a new set that holds the name and reference to all registered venues
 		Map<String,Venue> venues = new HashMap<String,Venue>();
@@ -65,17 +63,21 @@ public class ImportQualisDataServiceBean implements ImportQualisDataService {
 		
 		//Creates a new set that holds the information of the Venue objects and their respective Qualis
 		Set<QualifiedVenue> qualifiedVenues = new HashSet<QualifiedVenue>();
-		for (String key : parsedData.keySet()) {
+		for (Venue parsedVenue : parsedData.keySet()) {
 			// Retrieves the Qualis level
-			String level = parsedData.get(key);			
+			String level = parsedData.get(parsedVenue);			
 			try {
 				Qualis qualis = qualisDAO.retrieveByLevel(level);
-				if (venues.containsKey(key.toLowerCase())) {
+				String parsedVenueName = parsedVenue.getName().toLowerCase();
+				if (venues.containsKey(parsedVenueName)) {
 					// Venue already exists in system
-					qualifiedVenues.add(new CSVEntry(venues.get(key.toLowerCase()), qualis));
+					Venue persistentVenue = venues.get(parsedVenueName);
+					//TODO: verify if a venue can belong to two distinct categories simultaneously
+					//as two separate registers.
+					qualifiedVenues.add(new CSVEntry(persistentVenue, qualis));
 				} else {
-					Venue newVenue = new Venue(key, category);
-					qualifiedVenues.add(new CSVEntry(newVenue, qualis));
+					parsedVenue.setCategory(category);
+					qualifiedVenues.add(new CSVEntry(parsedVenue, qualis));
 				}
 			} catch (PersistentObjectNotFoundException e) {
 				// If there is no Qualis with the given level, throw an
@@ -99,6 +101,7 @@ public class ImportQualisDataServiceBean implements ImportQualisDataService {
 		for (QualifiedVenue qv : qualifiedVenues) {
 			Venue v = qv.getVenue();
 			if (!v.isPersistent()) {
+				//TODO: verify if a persistent venue should be saved, even if it wasn't altered here
 				venueDAO.save(v);
 			}
 			Qualis q = qv.getQualis();

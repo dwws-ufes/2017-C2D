@@ -3,7 +3,7 @@ package br.ufes.inf.nemo.marvin.research.application;
 import br.ufes.inf.nemo.marvin.research.domain.Qualis;
 import br.ufes.inf.nemo.marvin.research.domain.Venue;
 
-public class CSVEntry implements QualifiedVenue{
+public class CSVEntry implements QualifiedVenue {
 
 	private Venue venue;
 	private Qualis qualis;

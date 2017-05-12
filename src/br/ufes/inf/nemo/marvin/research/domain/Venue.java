@@ -19,6 +19,9 @@ public class Venue extends PersistentObjectSupport {
 	private static final long serialVersionUID = 1L;
 	
 	@NotNull
+	private String acronym;
+	
+	@NotNull
 	private String name;
 	
 	@Enumerated(EnumType.STRING)
@@ -33,6 +36,18 @@ public class Venue extends PersistentObjectSupport {
 		setCategory(category);
 	}
 	
+	public Venue(String name) {
+		this.name = name;
+	}
+	
+	public String getAcronym() {
+		return acronym;
+	}
+
+	public void setAcronym(String acronym) {
+		this.acronym = acronym;
+	}
+
 	public String getName() {
 		return name;
 	}

@@ -12,6 +12,7 @@ import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 
 import br.ufes.inf.nemo.jbutler.ejb.application.CrudService;
+import br.ufes.inf.nemo.jbutler.ejb.application.filters.LikeFilter;
 import br.ufes.inf.nemo.jbutler.ejb.application.filters.SimpleFilter;
 import br.ufes.inf.nemo.jbutler.ejb.controller.CrudController;
 import br.ufes.inf.nemo.jbutler.ejb.controller.PersistentObjectConverterFromId;
@@ -55,6 +56,6 @@ public class ManageCoursesController extends CrudController<Course> {
 	/** @see br.ufes.inf.nemo.jbutler.ejb.controller.ListingController#initFilters() */
 	@Override
 	protected void initFilters() {
-		addFilter(new SimpleFilter("manageCourses.filter.byName", "name", getI18nMessage("msgsCore", "manageCourses.text.filter.byName")));
+		addFilter(new LikeFilter("manageCourses.filter.byName", "name", getI18nMessage("msgsCore", "manageCourses.text.filter.byName")));
 	}
 }

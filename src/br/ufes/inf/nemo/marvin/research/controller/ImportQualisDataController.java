@@ -1,7 +1,6 @@
 package br.ufes.inf.nemo.marvin.research.controller;
 
 import java.io.IOException;
-import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -26,9 +25,7 @@ import br.ufes.inf.nemo.marvin.research.exceptions.QualisLevelNotRegisteredExcep
 @ConversationScoped
 public class ImportQualisDataController extends JSFController {
 
-	/**
-	 * 
-	 */
+	/** Serial id.	*/
 	private static final long serialVersionUID = 1L;
 	
 	/** The logger. */

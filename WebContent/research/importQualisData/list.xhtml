@@ -28,7 +28,11 @@
 				emptyMessage="#{msgsResearch['importQualisData.text.noQualifiedVenues']}"
 				reflow="true">
 				
-				<p:column headerText="#{msgsResearch['importQualisData.field.venue']}" styleClass="ui-grid-col-9">
+				<p:column headerText="#{msgsResearch['importQualisData.field.venueAcronym']}" styleClass="ui-grid-col-1">
+					<h:outputText value="#{qualifiedVenue.venue.acronym}" />
+				</p:column>
+								
+				<p:column headerText="#{msgsResearch['importQualisData.field.venueName']}" styleClass="ui-grid-col-9">
 					<h:outputText value="#{qualifiedVenue.venue.name}" />
 				</p:column>
 
