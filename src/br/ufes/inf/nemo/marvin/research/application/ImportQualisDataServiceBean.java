@@ -96,6 +96,7 @@ public class ImportQualisDataServiceBean implements ImportQualisDataService {
 	@Override
 	public void assignQualificationsToVenues(Set<QualifiedVenue> qualifiedVenues, int year) {
 		// TODO Auto-generated method stub
+		try {
 		for (QualifiedVenue qv : qualifiedVenues) {
 			Venue v = qv.getVenue();
 			if (!v.isPersistent()) {
@@ -104,6 +105,11 @@ public class ImportQualisDataServiceBean implements ImportQualisDataService {
 			Qualis q = qv.getQualis();
 			Qualification qualification = new Qualification(year, q, v);
 			qualificationDAO.save(qualification);
+		}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+			throw e;
 		}
 	}
 
