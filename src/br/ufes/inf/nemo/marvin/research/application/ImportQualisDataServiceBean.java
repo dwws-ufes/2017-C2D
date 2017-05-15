@@ -104,11 +104,15 @@ public class ImportQualisDataServiceBean implements ImportQualisDataService {
 	@Override
 	public void assignQualificationsToVenues(Set<QualifiedVenue> qualifiedVenues, int year) {
 		// TODO Auto-generated method stub
+<<<<<<< HEAD
 		Map<Venue, Qualification> venueQualifications = new HashMap<Venue, Qualification>();
 		for (Qualification q : qualificationDAO.retrieveByYear(year)) {
 			venueQualifications.put(q.getVenue(), q);
 		}
 		
+=======
+		try {
+>>>>>>> refs/remotes/origin/master
 		for (QualifiedVenue qv : qualifiedVenues) {
 			Venue venue = qv.getVenue();
 			Qualis qualis = qv.getQualis();
@@ -124,8 +128,16 @@ public class ImportQualisDataServiceBean implements ImportQualisDataService {
 			}
 			qualificationDAO.save(qualification);
 		}
+<<<<<<< HEAD
 		
 		//venuesImportEvent.fire(new VenuesImportEvent()); 
+=======
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+>>>>>>> refs/remotes/origin/master
 	}
 
 }
