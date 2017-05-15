@@ -18,6 +18,7 @@ import org.primefaces.model.UploadedFile;
 import br.ufes.inf.nemo.jbutler.ejb.controller.JSFController;
 import br.ufes.inf.nemo.marvin.research.application.ImportQualisDataService;
 import br.ufes.inf.nemo.marvin.research.application.QualifiedVenue;
+import br.ufes.inf.nemo.marvin.research.domain.VenueCategory;
 import br.ufes.inf.nemo.marvin.research.exceptions.CSVParseException;
 import br.ufes.inf.nemo.marvin.research.exceptions.QualisLevelNotRegisteredException;
 
@@ -45,7 +46,7 @@ public class ImportQualisDataController extends JSFController {
 	/** TODO: document this field. */
 	private UploadedFile file;
 	
-	private String category;
+	private VenueCategory category;
 	
 	private int year;
 
@@ -74,21 +75,25 @@ public class ImportQualisDataController extends JSFController {
 		return year;
 	}
 
-	public String getCategory() {
-		return category;
+	public VenueCategory[] getCategories() {
+		return VenueCategory.values();
 	}
 
-	public void setCategory(String category) {
+	public void setCategory(VenueCategory category) {
 		this.category = category;
 	}
-
+	
+	public VenueCategory getCategory() {
+		return category;
+	}
+	
 	public void setYear(int year) {
 		this.year = year;
 	}
 	
 	@PostConstruct
 	public void init() {
-		category = "Conference";
+		category = VenueCategory.CONFERENCE;
 	}
 
 

@@ -1,6 +1,7 @@
 package br.ufes.inf.nemo.marvin.research.controller;
 
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
@@ -18,10 +19,8 @@ import br.ufes.inf.nemo.marvin.research.domain.Score;
 @ConversationScoped
 public class CreateNewScoreSystemController extends JSFController {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -3103572317024290768L;
+	/** Serialization id. */
+	private static final long serialVersionUID = 1L;
 	
 	/** The logger. */
 	private static final Logger logger = Logger.getLogger(CreateNewScoreSystemController.class.getCanonicalName());
@@ -33,14 +32,17 @@ public class CreateNewScoreSystemController extends JSFController {
 	@Inject
 	private Conversation conversation;
 	
-	private List<Score> scores;
-	
 	@EJB
 	private CreateNewScoreSystemService createNewScoreSystemService;
 	
+	private List<Score> scores;
+	
 	@PostConstruct
 	public void init() {
+		logger.log(Level.FINE, "Initializing CreateNewScoreController: loading new scores from current qualis...");
 		scores = createNewScoreSystemService.constructScoresFromQualis();
+		// Begin the conversation.
+		if (conversation.isTransient()) conversation.begin();
 	}
 
 	public List<Score> getScores() {

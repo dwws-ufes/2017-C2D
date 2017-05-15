@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.ejb.Stateless;
@@ -20,6 +21,7 @@ import br.ufes.inf.nemo.marvin.research.persistence.ScoreDAO;
 import br.ufes.inf.nemo.marvin.research.persistence.ScoreSystemDAO;
 
 @Stateless
+@RolesAllowed({"SysAdmin"})
 public class CreateNewScoreSystemServiceBean implements CreateNewScoreSystemService {
 
 	/**

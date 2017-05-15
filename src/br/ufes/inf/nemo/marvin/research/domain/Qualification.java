@@ -3,6 +3,7 @@ package br.ufes.inf.nemo.marvin.research.domain;
 import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 import br.ufes.inf.nemo.jbutler.ejb.persistence.PersistentObjectSupport;
@@ -18,9 +19,12 @@ public class Qualification extends PersistentObjectSupport {
 	private Qualis qualis;
 	
 	@ManyToOne
+	@NotNull
 	private Venue venue;
 	
 	@Basic
+	@Min(0)
+	@NotNull
 	private int year;
 
 	protected Qualification() {}
@@ -51,6 +55,15 @@ public class Qualification extends PersistentObjectSupport {
 	public void setYear(int year) {
 		this.year = year;
 	}
+
+	public Venue getVenue() {
+		return venue;
+	}
+
+	public void setVenue(Venue venue) {
+		this.venue = venue;
+	}
+	
 	
 	
 	

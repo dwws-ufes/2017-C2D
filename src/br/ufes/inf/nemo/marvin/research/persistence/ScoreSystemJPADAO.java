@@ -49,7 +49,7 @@ public class ScoreSystemJPADAO extends BaseJPADAO<ScoreSystem> implements ScoreS
 		Root<ScoreSystem> root = cq.from(ScoreSystem.class);
 
 		// Filters the query with the academic.
-		cq.where(cb.equal(root.get(ScoreSystem_.endDate), null));
+		cq.where(cb.isNull(root.get(ScoreSystem_.endDate)));
 
 		// Retrieve the value and return.
 		ScoreSystem currentScoreSystem = executeSingleResultQuery(cq);

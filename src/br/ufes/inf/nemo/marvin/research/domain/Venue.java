@@ -1,13 +1,8 @@
 package br.ufes.inf.nemo.marvin.research.domain;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
 import br.ufes.inf.nemo.jbutler.ejb.persistence.PersistentObjectSupport;
@@ -26,7 +21,7 @@ public class Venue extends PersistentObjectSupport {
 	
 	@Enumerated(EnumType.STRING)
 	@NotNull
-	private Category category;
+	private VenueCategory category;
 	
 	protected Venue () {}
 	
@@ -57,41 +52,20 @@ public class Venue extends PersistentObjectSupport {
 	}
 
 	/** Getter for category. */
-	public Category getCategory() {
+	public VenueCategory getCategory() {
 		return category;
 	}
 
 	/** Setter for category. */
-	public void setCategory(Category category) {
+	public void setCategory(VenueCategory category) {
 		this.category = category;
 	}
 	
 	/** Setter for category. */
 	public void setCategory(String category) {
-		if (category.equals("Conference")) this.category = Category.CONFERENCE;
-		else this.category = Category.JOURNAL;
+		if (category.equals("Conference")) this.category = VenueCategory.CONFERENCE;
+		else this.category = VenueCategory.JOURNAL;
 	}
 	
-	/** Venue category */
-	public enum Category {
-		JOURNAL("Journal"),
-		CONFERENCE("Conference");
-		
-		String name;
-		
-		/** Getter for category name. */		
-		public String getName() {
-			return name;
-		}
-
-		/** Setter for category name. */
-		public void setName(String name) {
-			this.name = name;
-		}
-
-		Category(String name) {
-			this.name = name;
-		}
-	}
 	
 }

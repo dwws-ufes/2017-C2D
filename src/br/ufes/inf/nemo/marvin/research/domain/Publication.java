@@ -111,6 +111,14 @@ public abstract class Publication extends PersistentObjectSupport implements Com
 	public void setOwner(Academic owner) {
 		this.owner = owner;
 	}
+	
+	public Venue getVenue() {
+		return venue;
+	}
+
+	public void setVenue(Venue venue) {
+		this.venue = venue;
+	}
 
 	/** Getter for pages. */
 	public String getPages() {

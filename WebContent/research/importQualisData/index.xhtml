@@ -25,20 +25,22 @@
 			<ui:decorate template="/WEB-INF/decorators/#{coreInfo.decorator}/formfield.xhtml">
 				<ui:param name="fieldName" value="category" />
 				<ui:param name="label" value="#{msgsResearch['importQualisData.field.category']}" />
-				  <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
-		        <p:selectOneRadio id="category" value="#{importQualisDataController.category}" required="true">
-		        	<f:selectItem itemLabel="Conference" itemValue="Conference" />
-		            <f:selectItem itemLabel="Journal" itemValue="Journal" />
-		        </p:selectOneRadio>
+				<h:panelGrid>
+			        <p:selectOneRadio id="category" value="#{importQualisDataController.category}" required="true">
+						<f:selectItems value="#{importQualisDataController.categories}"
+						            var="category"
+						            itemValue="#{category}"
+						            itemLabel="#{category.name}" />
+			        </p:selectOneRadio>
 		        </h:panelGrid>
 	    	</ui:decorate>
 	    	
 			<ui:decorate template="/WEB-INF/decorators/#{coreInfo.decorator}/formfield.xhtml">
 				<ui:param name="fieldName" value="year" />
 				<ui:param name="label" value="#{msgsResearch['importQualisData.field.year']}" />
-				<p:inputText id="year" value="#{importQualisDataController.year}" required="true" pt:placeholder="#{msgsResearch['importQualisData.field.year.placeholder']}">
+				<p:inputNumber id="year" minValue="0" thousandSeparator="" decimalPlaces="0" value="#{importQualisDataController.year}" required="true" pt:placeholder="#{msgsResearch['importQualisData.field.year.placeholder']}">
 					<f:ajax event="blur" render="year" />
-				</p:inputText>
+				</p:inputNumber>
 			</ui:decorate>
 
 			<ui:decorate template="/WEB-INF/decorators/#{coreInfo.decorator}/formfield.xhtml">

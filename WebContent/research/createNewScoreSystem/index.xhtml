@@ -7,52 +7,58 @@
                 xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
                 template="/WEB-INF/decorators/#{coreInfo.decorator}/decorator.xhtml">
 	
-	<ui:define name="title"><h:outputText value="#{msgsCore['login.title']}" /></ui:define>
+	<ui:define name="title"><h:outputText value="#{msgsResearch['createNewScoreSystem.title']}" /></ui:define>
     
-    <ui:define name="description"><h:outputText value="#{msgsCore['login.title.description']}" /></ui:define>
+    <ui:define name="description"><h:outputText value="#{msgsResearch['createNewScoreSystem.title.description']}" /></ui:define>
 
   	<ui:define name="body">
-		<p><h:outputText value="#{msgsCore['login.text.instructions']}" /></p>
+		<p><h:outputText value="#{msgsResearch['createNewScoreSystem.text.instructions']}" /></p>
 		<!-- The form to be filled with authentication information. -->
 		<ui:decorate template="/WEB-INF/decorators/#{coreInfo.decorator}/form.xhtml">
 			<ui:param name="formName" value="form" />
 			<ui:param name="formLabel" value="#{msgsResearch['createNewScoreSystem.title']}" />
 			<p:focus />
 
+			<ui:decorate template="/WEB-INF/decorators/#{coreInfo.decorator}/formfield.xhtml">
+			<ui:param name="fieldName" value="scores" />
+			<ui:param name="label" value="Scores" />
 			<p:dataTable 
+				id="scores"
 				var="entity"
 				widgetVar="cellScore"
 				value="#{createNewScoreSystemController.scores}" 
 				editable="true" 
 				editMode="cell" 
 				>
-				<p:column headerText="#{msgsResearch[createNewScoreSystem.field.qualis]}">
+				
+				<p:column headerText="#{msgsResearch['createNewScoreSystem.field.qualis']}">
 				    <h:outputText value="#{entity.qualis.level}" />				    
 				</p:column>
-				<p:column headerText="#{msgsResearch[createNewScoreSystem.field.journal]}">
+				<p:column headerText="#{msgsResearch['createNewScoreSystem.field.journal']}">
 					<p:cellEditor>
-				    <f:facet name="output">
-				    	<h:outputText value="#{entity.scoreJournal}" />
-				    </f:facet>
-               	   <f:facet name="input">
-               	   		<p:inputText value="#{entity.scoreJournal}" />
-               	   </f:facet>
+					    <f:facet name="output">
+					    	<h:outputText value="#{entity.scoreJournal}" />
+					    </f:facet>
+	               	   <f:facet name="input">
+	               	   		<p:inputNumber id="scoreJournal" thousandSeparator="" decimalPlaces="0" required="true" value="#{entity.scoreJournal}" />
+	               	   </f:facet>
                	   </p:cellEditor>
 				</p:column>
-				<p:column headerText="#{msgsResearch[createNewScoreSystem.field.conference]}">
+				<p:column headerText="#{msgsResearch['createNewScoreSystem.field.conference']}">
 					<p:cellEditor>
-				    <f:facet name="output">
-				    	<h:outputText value="#{entity.scoreConference}" />
-				    </f:facet>
-               	   <f:facet name="input">
-               	   		<p:inputText value="#{entity.scoreConference}" />
-               	   </f:facet>
+					    <f:facet name="output">
+					    	<h:outputText value="#{entity.scoreConference}" />
+					    </f:facet>
+	               	   <f:facet name="input">
+	               	   		<p:inputNumber id="scoreConference" thousandSeparator="" decimalPlaces="0" value="#{entity.scoreConference}" required="true" />
+	               	   </f:facet>
                	   </p:cellEditor>
 				</p:column>
 			</p:dataTable>
+			</ui:decorate>
 			<ui:decorate template="/WEB-INF/decorators/#{coreInfo.decorator}/formbuttonpanel-04.xhtml">
-				<p:commandButton id="loginButton" action="#{sessionController.login}" value="#{msgsCore['login.button.login']}" update=":globalMessages form" icon="fa fa-fw fa-save" />
-				<p:defaultCommand target="loginButton" />
+				<p:commandButton id="saveButton" action="#{createNewScoreSystemController.save}" value="#{msgsResearch['createNewScoreSystem.button.save']}" icon="fa fa-fw fa-save" />
+				<p:defaultCommand target="saveButton" />
 			</ui:decorate>
 		</ui:decorate>
 

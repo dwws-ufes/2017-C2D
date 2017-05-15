@@ -12,12 +12,16 @@ import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.ejb.Stateless;
+import javax.enterprise.event.Event;
+import javax.inject.Inject;
 
 import br.ufes.inf.nemo.jbutler.ejb.persistence.exceptions.MultiplePersistentObjectsFoundException;
 import br.ufes.inf.nemo.jbutler.ejb.persistence.exceptions.PersistentObjectNotFoundException;
+import br.ufes.inf.nemo.marvin.research.controller.VenuesImportEvent;
 import br.ufes.inf.nemo.marvin.research.domain.Qualification;
 import br.ufes.inf.nemo.marvin.research.domain.Qualis;
 import br.ufes.inf.nemo.marvin.research.domain.Venue;
+import br.ufes.inf.nemo.marvin.research.domain.VenueCategory;
 import br.ufes.inf.nemo.marvin.research.exceptions.CSVParseException;
 import br.ufes.inf.nemo.marvin.research.exceptions.QualisLevelNotRegisteredException;
 import br.ufes.inf.nemo.marvin.research.persistence.QualificationDAO;
@@ -43,9 +47,13 @@ public class ImportQualisDataServiceBean implements ImportQualisDataService {
 	@EJB
 	private QualificationDAO qualificationDAO;
 
+	
+	/**Calls Venue-Publication Matching*/
+	@Inject
+	private Event<VenuesImportEvent> venuesImportEvent; 
 
 	@Override
-	public Set<QualifiedVenue> importQualisData(InputStream inputStream, String category)
+	public Set<QualifiedVenue> importQualisData(InputStream inputStream, VenueCategory category)
 			throws CSVParseException, QualisLevelNotRegisteredException {
 		// TODO Auto-generated method stub
 		CSVParser csvParser = new CSVParser(inputStream);
@@ -53,11 +61,11 @@ public class ImportQualisDataServiceBean implements ImportQualisDataService {
 		return qualifiedVenues;
 	}
 
-	private Set<QualifiedVenue> verifyParsedData(Map<Venue, String> parsedData, String category)
+	private Set<QualifiedVenue> verifyParsedData(Map<Venue, String> parsedData, VenueCategory category)
 			throws QualisLevelNotRegisteredException {
 		//Creates a new set that holds the name and reference to all registered venues
 		Map<String,Venue> venues = new HashMap<String,Venue>();
-		for (Venue v : venueDAO.retrieveAll()) {
+		for (Venue v : venueDAO.retrieveByCategory(category)) {
 			venues.put(v.getName().toLowerCase(), v);
 		}
 		
@@ -72,8 +80,6 @@ public class ImportQualisDataServiceBean implements ImportQualisDataService {
 				if (venues.containsKey(parsedVenueName)) {
 					// Venue already exists in system
 					Venue persistentVenue = venues.get(parsedVenueName);
-					//TODO: verify if a venue can belong to two distinct categories simultaneously
-					//as two separate registers.
 					qualifiedVenues.add(new CSVEntry(persistentVenue, qualis));
 				} else {
 					parsedVenue.setCategory(category);
@@ -98,16 +104,28 @@ public class ImportQualisDataServiceBean implements ImportQualisDataService {
 	@Override
 	public void assignQualificationsToVenues(Set<QualifiedVenue> qualifiedVenues, int year) {
 		// TODO Auto-generated method stub
+		Map<Venue, Qualification> venueQualifications = new HashMap<Venue, Qualification>();
+		for (Qualification q : qualificationDAO.retrieveByYear(year)) {
+			venueQualifications.put(q.getVenue(), q);
+		}
+		
 		for (QualifiedVenue qv : qualifiedVenues) {
-			Venue v = qv.getVenue();
-			if (!v.isPersistent()) {
-				//TODO: verify if a persistent venue should be saved, even if it wasn't altered here
-				venueDAO.save(v);
+			Venue venue = qv.getVenue();
+			Qualis qualis = qv.getQualis();
+			Qualification qualification = null;
+			if (venue.isPersistent() && venueQualifications.containsKey(venue)) {
+				qualification = venueQualifications.get(venue);
+				qualification.setQualis(qualis);
 			}
-			Qualis q = qv.getQualis();
-			Qualification qualification = new Qualification(year, q, v);
+			else {
+				//TODO: verify if a persistent venue should be saved, even if it wasn't altered here
+				venueDAO.save(venue);				
+				qualification = new Qualification(year, qualis, venue);
+			}
 			qualificationDAO.save(qualification);
 		}
+		
+		//venuesImportEvent.fire(new VenuesImportEvent()); 
 	}
 
 }

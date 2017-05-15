@@ -3,6 +3,7 @@ package br.ufes.inf.nemo.marvin.research.domain;
 import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 import br.ufes.inf.nemo.jbutler.ejb.persistence.PersistentObjectSupport;
@@ -24,10 +25,12 @@ public class Score extends PersistentObjectSupport {
 	private ScoreSystem scoreSystem;
 	
 	@Basic
+	@Min(0)
 	@NotNull
 	private int scoreConference;
 	
 	@Basic
+	@Min(0)
 	@NotNull
 	private int scoreJournal;
 	
