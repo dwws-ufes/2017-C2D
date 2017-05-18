@@ -17,6 +17,9 @@ public class Venue extends PersistentObjectSupport {
 	private String acronym;
 	
 	@NotNull
+	private String issn;
+		
+	@NotNull
 	private String name;
 	
 	@Enumerated(EnumType.STRING)
@@ -42,7 +45,15 @@ public class Venue extends PersistentObjectSupport {
 	public void setAcronym(String acronym) {
 		this.acronym = acronym;
 	}
+	
+	public String getIssn() {
+		return issn;
+	}
 
+	public void setIssn(String issn) {
+		this.issn = issn;
+	}
+	
 	public String getName() {
 		return name;
 	}

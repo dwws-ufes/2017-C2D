@@ -84,5 +84,12 @@ public class CalculateAcademicsScoreController extends JSFController {
 		logger.log(Level.FINE, "Adding the selected researcher (if not null) to the configuration: {0}", selectedResearcher);
 		if (selectedResearcher != null) researchers.add(selectedResearcher);
 	}
+	
+	public String calculateScore() {
+		
+		return "";
+	}
+	
+	
 
 }

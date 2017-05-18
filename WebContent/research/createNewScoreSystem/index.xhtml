@@ -19,46 +19,43 @@
 			<ui:param name="formLabel" value="#{msgsResearch['createNewScoreSystem.title']}" />
 			<p:focus />
 
-			<ui:decorate template="/WEB-INF/decorators/#{coreInfo.decorator}/formfield.xhtml">
-			<ui:param name="fieldName" value="#{null}" />
-			<ui:param name="label" value="Scores" />
 			<p:dataTable 
 				id="scores"
-				var="entity"
-				widgetVar="cellScore"
+				var="score"
 				value="#{createNewScoreSystemController.scores}" 
 				editable="true" 
 				editMode="cell" 
+				reflow="true"
 				>
-				
+
 				<p:column headerText="#{msgsResearch['createNewScoreSystem.field.qualis']}">
-				    <h:outputText value="#{entity.qualis.level}" />				    
-				</p:column>
-				<p:column headerText="#{msgsResearch['createNewScoreSystem.field.journal']}">
-					<p:cellEditor>
-					    <f:facet name="output">
-					    	<h:outputText value="#{entity.scoreJournal}" />
-					    </f:facet>
-	               	   <f:facet name="input">
-	               	   		<p:inputNumber id="scoreJournal" thousandSeparator="" decimalPlaces="0" required="true" value="#{entity.scoreJournal}" />
-	               	   </f:facet>
-               	   </p:cellEditor>
+				    <h:outputText value="#{score.qualis.level}" />				    
 				</p:column>
 				<p:column headerText="#{msgsResearch['createNewScoreSystem.field.conference']}">
 					<p:cellEditor>
 					    <f:facet name="output">
-					    	<h:outputText value="#{entity.scoreConference}" />
+					    	<h:outputText value="#{score.scoreConference}" />
 					    </f:facet>
 	               	   <f:facet name="input">
-	               	   		<p:inputNumber id="scoreConference" thousandSeparator="" decimalPlaces="0" value="#{entity.scoreConference}" required="true" />
+	               	   		<p:inputNumber id="scoreConference" thousandSeparator="" decimalPlaces="0" required="true" value="#{score.scoreConference}" />
+	               	   </f:facet>
+               	   </p:cellEditor>
+				</p:column>
+				<p:column headerText="#{msgsResearch['createNewScoreSystem.field.journal']}">
+					<p:cellEditor>
+					    <f:facet name="output">
+					    	<h:outputText value="#{score.scoreJournal}" />
+					    </f:facet>
+	               	   <f:facet name="input">
+	               	   		<p:inputNumber id="scoreJournal" thousandSeparator="" decimalPlaces="0" required="true" value="#{score.scoreJournal}" />
 	               	   </f:facet>
                	   </p:cellEditor>
 				</p:column>
 			</p:dataTable>
-			</ui:decorate>
+
 			<ui:decorate template="/WEB-INF/decorators/#{coreInfo.decorator}/formbuttonpanel-04.xhtml">
 				<p:commandButton id="saveButton" action="#{createNewScoreSystemController.save}" value="#{msgsResearch['createNewScoreSystem.button.save']}" icon="fa fa-fw fa-save" />
-				<p:defaultCommand target="saveButton" />
+
 			</ui:decorate>
 		</ui:decorate>
 

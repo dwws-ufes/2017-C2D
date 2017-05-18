@@ -10,6 +10,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import br.ufes.inf.nemo.marvin.research.domain.Venue;
+import br.ufes.inf.nemo.marvin.research.domain.VenueCategory;
 import br.ufes.inf.nemo.marvin.research.exceptions.CSVParseException;
 import br.ufes.inf.nemo.marvin.research.exceptions.LattesParseException;
 
@@ -24,7 +25,7 @@ public class CSVParser {
 		return venuesMap;
 	}
 	
-	public CSVParser(InputStream csvFile) throws CSVParseException {
+	public CSVParser(InputStream csvFile, VenueCategory category ) throws CSVParseException {
 
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(csvFile))) {
         	String csvSplitBy = ";";
@@ -35,14 +36,23 @@ public class CSVParser {
 				String[] values = line.split(csvSplitBy);
 				venuesMap = new HashMap<Venue,String>();
 				while (line != null) {
+					
 					values = line.split(csvSplitBy);
-					if (values.length == 4) {
+					if (values.length == 4 && category.equals(VenueCategory.CONFERENCE)) {
 						Venue v = new Venue(values[1].trim());
-						v.setAcronym(values[0]);
+						v.setAcronym(values[0].trim());
 						venuesMap.put(v, values[3].trim());
 						line = reader.readLine();
 					}
-					else throw new Exception();
+					else if(values.length == 3 && category.equals(VenueCategory.JOURNAL)){
+							Venue v = new Venue(values[1].trim());
+							v.setAcronym(values[0].trim());
+							venuesMap.put(v, values[2].trim());
+							line = reader.readLine();	
+						
+						 } else throw new Exception();
+						
+					
 				}
 			} else throw new Exception();
 

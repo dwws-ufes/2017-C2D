@@ -5,7 +5,6 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.Conversation;
 import javax.enterprise.context.ConversationScoped;
@@ -46,10 +45,13 @@ public class ImportQualisDataController extends JSFController {
 	/** TODO: document this field. */
 	private UploadedFile file;
 	
+	/** TODO: document this field. */
 	private VenueCategory category;
 	
+	/** TODO: document this field. */
 	private int year;
 
+	/** TODO: document this field. */
 	private Set<QualifiedVenue> qualifiedVenues;
 	
 	
@@ -91,7 +93,7 @@ public class ImportQualisDataController extends JSFController {
 		this.year = year;
 	}
 	
-	@PostConstruct
+	@Inject
 	public void init() {
 		category = VenueCategory.CONFERENCE;
 	}
