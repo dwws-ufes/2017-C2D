@@ -56,7 +56,7 @@ public class ImportQualisDataServiceBean implements ImportQualisDataService {
 	public Set<QualifiedVenue> importQualisData(InputStream inputStream, VenueCategory category)
 			throws CSVParseException, QualisLevelNotRegisteredException {
 		// TODO Auto-generated method stub
-		CSVParser csvParser = new CSVParser(inputStream);
+		CSVParser csvParser = new CSVParser(inputStream, category);
 		Set<QualifiedVenue> qualifiedVenues = verifyParsedData(csvParser.getVenuesMap(), category);
 		return qualifiedVenues;
 	}
