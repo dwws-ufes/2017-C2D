@@ -5,6 +5,7 @@ public class PublicationScore {
 	private Venue venue;
 	private int year;
 	private int score;
+	
 	public String getTitle() {
 		return title;
 	}

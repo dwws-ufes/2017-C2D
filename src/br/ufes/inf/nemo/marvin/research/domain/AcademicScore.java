@@ -12,6 +12,10 @@ public class AcademicScore {
 	private int scoreConference;
 	private int scoreTotal;
 	
+	//public AcademicScore(Academic academic) {
+		//this.academic = academic;
+	//}
+	
 	public List<PublicationScore> getPublicationsScores() {
 		return publicationsScores;
 	}
