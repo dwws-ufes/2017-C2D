@@ -29,21 +29,7 @@
 				>
 
 				<p:column headerText="#{msgsResearch['createNewScoreSystem.field.qualis']}">
-<<<<<<< HEAD
-				    <h:outputText value="#{score.qualis.level}" />				    
-=======
 				    <h:outputText value="#{entity.qualis.level}" />				    
-				</p:column>
-				<p:column headerText="#{msgsResearch['createNewScoreSystem.field.journal']}">
-					<p:cellEditor>
-					    <f:facet name="output">
-					    	<h:outputText value="#{entity.scoreJournal}" />
-					    </f:facet>
-	               	   <f:facet name="input">
-	               	   		<p:spinner id="scoreJournal" required="true" value="#{entity.scoreJournal}" min="0" />
-	               	   </f:facet>
-               	   </p:cellEditor>
->>>>>>> refs/remotes/origin/master
 				</p:column>
 				<p:column headerText="#{msgsResearch['createNewScoreSystem.field.conference']}">
 					<p:cellEditor>
@@ -51,7 +37,6 @@
 					    	<h:outputText value="#{score.scoreConference}" />
 					    </f:facet>
 	               	   <f:facet name="input">
-<<<<<<< HEAD
 	               	   		<p:inputNumber id="scoreConference" thousandSeparator="" decimalPlaces="0" required="true" value="#{score.scoreConference}" />
 	               	   </f:facet>
                	   </p:cellEditor>
@@ -63,9 +48,6 @@
 					    </f:facet>
 	               	   <f:facet name="input">
 	               	   		<p:inputNumber id="scoreJournal" thousandSeparator="" decimalPlaces="0" required="true" value="#{score.scoreJournal}" />
-=======
-	               	   		<p:spinner id="scoreConference" value="#{entity.scoreConference}" required="true" min="0" />
->>>>>>> refs/remotes/origin/master
 	               	   </f:facet>
                	   </p:cellEditor>
 				</p:column>

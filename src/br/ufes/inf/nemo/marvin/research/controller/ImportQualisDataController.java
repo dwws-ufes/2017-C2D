@@ -1,6 +1,7 @@
 package br.ufes.inf.nemo.marvin.research.controller;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -52,10 +53,10 @@ public class ImportQualisDataController extends JSFController {
 	private int year;
 
 	/** TODO: document this field. */
-	private Set<QualifiedVenue> qualifiedVenues;
+	private List<QualifiedVenue> qualifiedVenues;
 	
 	
-	public Set<QualifiedVenue> getQualifiedVenues() {
+	public List<QualifiedVenue> getQualifiedVenues() {
 		return qualifiedVenues;
 	}
 	
@@ -75,6 +76,10 @@ public class ImportQualisDataController extends JSFController {
 	
 	public int getYear() {
 		return year;
+	}
+
+	public boolean isRenderAcronym() {
+		return category.equals(VenueCategory.CONFERENCE);
 	}
 
 	public VenueCategory[] getCategories() {

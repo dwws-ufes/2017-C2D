@@ -1,8 +1,11 @@
 package br.ufes.inf.nemo.marvin.research.application;
 
 import java.io.InputStream;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
@@ -53,15 +56,15 @@ public class ImportQualisDataServiceBean implements ImportQualisDataService {
 	private Event<VenuesImportEvent> venuesImportEvent; 
 
 	@Override
-	public Set<QualifiedVenue> importQualisData(InputStream inputStream, VenueCategory category)
+	public List<QualifiedVenue> importQualisData(InputStream inputStream, VenueCategory category)
 			throws CSVParseException, QualisLevelNotRegisteredException {
 		// TODO Auto-generated method stub
 		CSVParser csvParser = new CSVParser(inputStream, category);
-		Set<QualifiedVenue> qualifiedVenues = verifyParsedData(csvParser.getVenuesMap(), category);
+		List<QualifiedVenue> qualifiedVenues = verifyParsedData(csvParser.getVenuesMap(), category);
 		return qualifiedVenues;
 	}
 
-	private Set<QualifiedVenue> verifyParsedData(Map<Venue, String> parsedData, VenueCategory category)
+	private List<QualifiedVenue> verifyParsedData(Map<Venue, String> parsedData, VenueCategory category)
 			throws QualisLevelNotRegisteredException {
 		//Creates a new set that holds the name and reference to all registered venues
 		Map<String,Venue> venues = new HashMap<String,Venue>();
@@ -70,7 +73,7 @@ public class ImportQualisDataServiceBean implements ImportQualisDataService {
 		}
 		
 		//Creates a new set that holds the information of the Venue objects and their respective Qualis
-		Set<QualifiedVenue> qualifiedVenues = new HashSet<QualifiedVenue>();
+		List<QualifiedVenue> qualifiedVenues = new LinkedList<QualifiedVenue>();
 		for (Venue parsedVenue : parsedData.keySet()) {
 			// Retrieves the Qualis level
 			String level = parsedData.get(parsedVenue);			
@@ -80,10 +83,10 @@ public class ImportQualisDataServiceBean implements ImportQualisDataService {
 				if (venues.containsKey(parsedVenueName)) {
 					// Venue already exists in system
 					Venue persistentVenue = venues.get(parsedVenueName);
-					qualifiedVenues.add(new CSVEntry(persistentVenue, qualis));
+					qualifiedVenues.add(new QualifiedVenue(persistentVenue, qualis));
 				} else {
 					parsedVenue.setCategory(category);
-					qualifiedVenues.add(new CSVEntry(parsedVenue, qualis));
+					qualifiedVenues.add(new QualifiedVenue(parsedVenue, qualis));
 				}
 			} catch (PersistentObjectNotFoundException e) {
 				// If there is no Qualis with the given level, throw an
@@ -98,11 +101,12 @@ public class ImportQualisDataServiceBean implements ImportQualisDataService {
 				throw new EJBException(e);
 			}
 		}
+		Collections.sort(qualifiedVenues);
 		return qualifiedVenues;
 	}
 
 	@Override
-	public void assignQualificationsToVenues(Set<QualifiedVenue> qualifiedVenues, int year) {
+	public void assignQualificationsToVenues(List<QualifiedVenue> qualifiedVenues, int year) {
 		// TODO Auto-generated method stub
 		Map<Venue, Qualification> venueQualifications = new HashMap<Venue, Qualification>();
 		for (Qualification q : qualificationDAO.retrieveByYear(year)) {
@@ -115,7 +119,10 @@ public class ImportQualisDataServiceBean implements ImportQualisDataService {
 			Qualification qualification = null;
 			if (venue.isPersistent() && venueQualifications.containsKey(venue)) {
 				qualification = venueQualifications.get(venue);
-				qualification.setQualis(qualis);
+				if (qualification != null)
+					qualification.setQualis(qualis);
+				else
+					qualification = new Qualification(year, qualis, venue);
 			}
 			else {
 				//TODO: verify if a persistent venue should be saved, even if it wasn't altered here
@@ -123,6 +130,7 @@ public class ImportQualisDataServiceBean implements ImportQualisDataService {
 				qualification = new Qualification(year, qualis, venue);
 			}
 			qualificationDAO.save(qualification);
+			System.out.println("Saved venue: " + venue.getName());
 		}
 		
 		//venuesImportEvent.fire(new VenuesImportEvent()); 

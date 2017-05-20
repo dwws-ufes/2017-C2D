@@ -8,15 +8,13 @@ import javax.validation.constraints.NotNull;
 import br.ufes.inf.nemo.jbutler.ejb.persistence.PersistentObjectSupport;
 
 @Entity
-public class Venue extends PersistentObjectSupport {
+public class Venue extends PersistentObjectSupport implements Comparable<Venue> {
 
 	/** Serialization id. */
 	private static final long serialVersionUID = 1L;
 	
-	@NotNull
 	private String acronym;
 	
-	@NotNull
 	private String issn;
 		
 	@NotNull
@@ -77,6 +75,16 @@ public class Venue extends PersistentObjectSupport {
 		if (category.equals("Conference")) this.category = VenueCategory.CONFERENCE;
 		else this.category = VenueCategory.JOURNAL;
 	}
-	
+
+	@Override
+	public int compareTo(Venue o) {
+		int cmp = 0;
+
+		// Compares by name.
+		cmp = name.compareTo(o.name);		
+		return cmp;
+	}
+
+
 	
 }

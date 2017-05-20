@@ -26,10 +26,20 @@
 				var="qualifiedVenue" 
 				rowKey="#{qualifiedVenue.venue.uuid}"
 				emptyMessage="#{msgsResearch['importQualisData.text.noQualifiedVenues']}"
+				paginator="true"
+				paginatorPosition="top"
+				paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                rows="25"
+                rowsPerPageTemplate="25,50,75"
+				loadingMessage="#{msgs['jbutler.text.ajax.loading']}" 
 				reflow="true">
 				
-				<p:column headerText="#{msgsResearch['importQualisData.field.venueAcronym']}" styleClass="ui-grid-col-1">
+				<p:column headerText="#{msgsResearch['importQualisData.field.venueAcronym']}" styleClass="ui-grid-col-1" rendered="#{importQualisDataController.renderAcronym}">
 					<h:outputText value="#{qualifiedVenue.venue.acronym}" />
+				</p:column>
+				
+				<p:column headerText="#{msgsResearch['importQualisData.field.venueISSN']}" styleClass="ui-grid-col-1" rendered="#{!importQualisDataController.renderAcronym}">
+					<h:outputText value="#{qualifiedVenue.venue.issn}" />
 				</p:column>
 								
 				<p:column headerText="#{msgsResearch['importQualisData.field.venueName']}" styleClass="ui-grid-col-9">

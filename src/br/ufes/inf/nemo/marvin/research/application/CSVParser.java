@@ -46,13 +46,12 @@ public class CSVParser {
 					}
 					else if(values.length == 3 && category.equals(VenueCategory.JOURNAL)){
 							Venue v = new Venue(values[1].trim());
-							v.setAcronym(values[0].trim());
+							v.setIssn(values[0].trim());
 							venuesMap.put(v, values[2].trim());
 							line = reader.readLine();	
 						
-						 } else throw new Exception();
+					} else throw new Exception();
 						
-					
 				}
 			} else throw new Exception();
 

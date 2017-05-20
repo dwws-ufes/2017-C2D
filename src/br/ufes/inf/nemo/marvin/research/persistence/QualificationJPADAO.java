@@ -1,5 +1,6 @@
 package br.ufes.inf.nemo.marvin.research.persistence;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -9,9 +10,12 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import br.ufes.inf.nemo.jbutler.ejb.persistence.BaseJPADAO;
+import br.ufes.inf.nemo.marvin.research.domain.Publication;
+import br.ufes.inf.nemo.marvin.research.domain.Publication_;
 import br.ufes.inf.nemo.marvin.research.domain.Qualification;
 import br.ufes.inf.nemo.marvin.research.domain.Qualification_;
 import br.ufes.inf.nemo.marvin.research.domain.Venue;
@@ -63,6 +67,25 @@ public class QualificationJPADAO extends BaseJPADAO<Qualification> implements Qu
 		cq.where(cb.equal(root.get(Qualification_.year), year));
 		List<Qualification> result = entityManager.createQuery(cq).getResultList();
 		logger.log(Level.INFO, "Retrieve qualifications of year \"{0}\" returned {1} results.", new Object[] { year, result.size() });
+		return result;
+	}
+
+	@Override
+	public Qualification retrieveByVenueAndYear(Venue venue, Integer year) {
+		logger.log(Level.FINE, "Retrieving the qualification of venue \"{0}\" of year {1}...", new Object[] { venue.getName(),  year});
+
+		// Constructs the query over the Publication class.
+		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+		CriteriaQuery<Qualification> cq = cb.createQuery(Qualification.class);
+		Root<Qualification> root = cq.from(Qualification.class);
+
+		// Filters the query with the academic and the year range.
+		List<Predicate> constraints = new ArrayList<>();
+		constraints.add(cb.equal(root.get(Qualification_.venue), venue));
+		if (year != null) constraints.add(cb.ge(root.get(Qualification_.year), year));
+		cq.where(cb.and(constraints.toArray(new Predicate[] { })));
+		Qualification result = entityManager.createQuery(cq).getSingleResult();
+		logger.log(Level.INFO, "Retrieve qualification of venue \"{0}\" of year {1}.", new Object[] { venue.getName(),  year});
 		return result;
 	}
 }

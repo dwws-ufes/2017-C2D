@@ -5,11 +5,11 @@ import javax.annotation.Generated;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@Generated(value="Dali", date="2017-05-18T17:01:38.904-0300")
+@Generated(value="Dali", date="2017-05-19T16:08:52.725-0300")
 @StaticMetamodel(Venue.class)
 public class Venue_ extends PersistentObjectSupport_ {
 	public static volatile SingularAttribute<Venue, String> acronym;
+	public static volatile SingularAttribute<Venue, String> issn;
 	public static volatile SingularAttribute<Venue, String> name;
 	public static volatile SingularAttribute<Venue, VenueCategory> category;
-	public static volatile SingularAttribute<Venue, String> issn;
 }

@@ -12,4 +12,5 @@ import br.ufes.inf.nemo.marvin.research.domain.Venue;
 public interface QualificationDAO extends BaseDAO<Qualification> {
 	List<Qualification> retrieveByVenue(Venue venue);
 	List<Qualification> retrieveByYear(int year);
+	Qualification retrieveByVenueAndYear(Venue venue, Integer year);
 }

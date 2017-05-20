@@ -2,6 +2,7 @@ package br.ufes.inf.nemo.marvin.research.application;
 
 import java.io.InputStream;
 import java.io.Serializable;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -27,10 +28,10 @@ public interface ImportQualisDataService extends Serializable {
 	 * @throws CSVParseException
 	 * @throws QualisLevelNotRegisteredException 
 	 */
-	Set<QualifiedVenue> importQualisData(InputStream inputStream, VenueCategory category)
+	List<QualifiedVenue> importQualisData(InputStream inputStream, VenueCategory category)
 			throws CSVParseException, QualisLevelNotRegisteredException;
 	
-	void assignQualificationsToVenues(Set<QualifiedVenue> qualifiedVenues, int year);
+	void assignQualificationsToVenues(List<QualifiedVenue> qualifiedVenues, int year);
 
 
 
