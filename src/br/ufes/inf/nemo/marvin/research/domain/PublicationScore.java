@@ -2,14 +2,22 @@ package br.ufes.inf.nemo.marvin.research.domain;
 
 public class PublicationScore {
 	private String title;
+	private Publication publication;
 	private Venue venue;
 	private int year;
 	private int score;
+	
 	public String getTitle() {
 		return title;
 	}
 	public void setTitle(String title) {
 		this.title = title;
+	}
+	public Publication getPublication() {
+		return publication;
+	}
+	public void setPublication(Publication publication) {
+		this.publication = publication;
 	}
 	public Venue getVenue() {
 		return venue;
