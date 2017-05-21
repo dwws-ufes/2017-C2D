@@ -53,6 +53,10 @@
 				<!-- p:ajax event="rowSelect" update=":listingForm:buttonsGroup" / -->
 				<!-- p:ajax event="rowUnselect" update=":listingForm:buttonsGroup" / -->
 			</p:dataTable>
+			<p:hotkey bind="ctrl+left" handler="goToFirstPage(listingTable);" />
+			<p:hotkey bind="left" handler="goToPreviousPage(listingTable);" />
+			<p:hotkey bind="right" handler="goToNextPage(listingTable);" />
+			<p:hotkey bind="ctrl+right" handler="goToLastPage(listingTable);" />
 
 			<!-- Buttons shown below the listing. -->
 			<h:panelGroup id="buttonsGroup">

@@ -24,9 +24,7 @@ import br.ufes.inf.nemo.marvin.research.persistence.ScoreSystemDAO;
 @RolesAllowed({"SysAdmin"})
 public class CreateNewScoreSystemServiceBean implements CreateNewScoreSystemService {
 
-	/**
-	 * 
-	 */
+	/** Serialization id. */
 	private static final long serialVersionUID = 4963783587733653515L;
 
 	/** The logger. */

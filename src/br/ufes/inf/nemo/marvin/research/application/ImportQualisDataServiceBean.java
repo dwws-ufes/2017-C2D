@@ -58,7 +58,7 @@ public class ImportQualisDataServiceBean implements ImportQualisDataService {
 	@Override
 	public List<QualifiedVenue> importQualisData(InputStream inputStream, VenueCategory category)
 			throws CSVParseException, QualisLevelNotRegisteredException {
-		// TODO Auto-generated method stub
+		
 		CSVParser csvParser = new CSVParser(inputStream, category);
 		List<QualifiedVenue> qualifiedVenues = verifyParsedData(csvParser.getVenuesMap(), category);
 		return qualifiedVenues;
@@ -107,7 +107,7 @@ public class ImportQualisDataServiceBean implements ImportQualisDataService {
 
 	@Override
 	public void assignQualificationsToVenues(List<QualifiedVenue> qualifiedVenues, int year) {
-		// TODO Auto-generated method stub
+		
 		Map<Venue, Qualification> venueQualifications = new HashMap<Venue, Qualification>();
 		for (Qualification q : qualificationDAO.retrieveByYear(year)) {
 			venueQualifications.put(q.getVenue(), q);
@@ -133,7 +133,7 @@ public class ImportQualisDataServiceBean implements ImportQualisDataService {
 			System.out.println("Saved venue: " + venue.getName());
 		}
 		
-		//venuesImportEvent.fire(new VenuesImportEvent()); 
+		venuesImportEvent.fire(new VenuesImportEvent()); 
 	}
 
 }

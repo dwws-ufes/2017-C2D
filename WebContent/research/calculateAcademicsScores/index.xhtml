@@ -24,7 +24,7 @@
 			<ui:decorate template="/WEB-INF/decorators/#{coreInfo.decorator}/formfield.xhtml">
 				<ui:param name="fieldName" value="startYear" />
 				<ui:param name="label" value="#{msgsResearch['calculateAcademicsScores.field.startYear']}" />
-				<p:inputNumber id="startYear" minValue="0" decimalPlaces="0" thousandSeparator="" value="#{calculateAcademicsScoreController.startYear}" pt:placeholder="#{msgsResearch['generateBibliography.field.startYear.placeholder']}">
+				<p:inputNumber id="startYear" minValue="0" decimalPlaces="0" thousandSeparator="" value="#{calculateAcademicsScoresController.startYear}" pt:placeholder="#{msgsResearch['generateBibliography.field.startYear.placeholder']}">
 					<p:ajax event="blur" update="startYearField" />
 				</p:inputNumber>
 			</ui:decorate>
@@ -32,7 +32,7 @@
 			<ui:decorate template="/WEB-INF/decorators/#{coreInfo.decorator}/formfield.xhtml">
 				<ui:param name="fieldName" value="endYear" />
 				<ui:param name="label" value="#{msgsResearch['calculateAcademicsScores.field.endYear']}" />
-				<p:inputNumber id="endYear" minValue="0" decimalPlaces="0" thousandSeparator="" value="#{calculateAcademicsScoreController.endYear}" pt:placeholder="#{msgsResearch['generateBibliography.field.endYear.placeholder']}">
+				<p:inputNumber id="endYear" minValue="0" decimalPlaces="0" thousandSeparator="" value="#{calculateAcademicsScoresController.endYear}" pt:placeholder="#{msgsResearch['generateBibliography.field.endYear.placeholder']}">
 					<p:ajax event="blur" update="endYearField" />
 				</p:inputNumber>
 			</ui:decorate>
@@ -41,36 +41,15 @@
 				<ui:param name="fieldName" value="researchers" />
 				<ui:param name="label" value="#{msgsResearch['calculateAcademicsScores.field.researchers']}" />
 				<p:panelGrid columns="2" layout="grid" columnClasses="ui-grid-col-9,ui-grid-col-3">
-					<p:selectOneMenu id="researchers" value="#{calculateAcademicsScoresController.selectedResearcher}" converter="#{calculateAcademicsScoresController.academicConverter}" effect="fade" filter="true" filterMatchMode="startsWith" style="width: 100%">
-						<f:selectItem itemLabel="" itemValue="#{null}" />
+					<p:selectManyMenu id="researchers" value="#{calculateAcademicsScoresController.selectedResearchers}" converter="#{calculateAcademicsScoresController.academicConverter}" effect="fade" filter="true" filterMatchMode="startsWith" style="width: 100%">
 						<f:selectItems value="#{calculateAcademicsScoresController.researchers}" var="researcher" itemLabel="#{researcher.name}" itemValue="#{researcher}" />
-					</p:selectOneMenu>
+					</p:selectManyMenu>
 				</p:panelGrid>
-				<!--  
-				<p:dataTable id="bgrTable" var="bgr" value="#{generateBibliographyController.bibGenResearchers}" editable="true" editMode="cell" emptyMessage="#{msgsResearch['generateBibliography.text.noBibGenResearchers']}" style="margin-top: 5px;" reflow="true">
-					<p:column headerText="#{msgsResearch['generateBibliography.field.researcher']}" styleClass="ui-grid-col-6">
-						<h:outputText value="#{bgr.researcher}" />
-					</p:column>
-					
-					<p:column headerText="#{msgsResearch['generateBibliography.field.startYear']}" style="text-align: center;" styleClass="ui-grid-col-2">
-						<p:cellEditor>
-							<f:facet name="output"><h:outputText value="#{bgr.startYear == null ? msgsResearch['generateBibliography.field.startYear.empty'] : bgr.startYear}" /></f:facet>
-							<f:facet name="input"><p:inputText id="bgrStartYear" value="#{bgr.startYear}" /></f:facet>
-						</p:cellEditor>
-					</p:column>
-					<p:column headerText="#{msgsResearch['generateBibliography.field.endYear']}" style="text-align: center;" styleClass="ui-grid-col-2">
-						<p:cellEditor>
-							<f:facet name="output"><h:outputText value="#{bgr.endYear == null ? msgsResearch['generateBibliography.field.endYear.empty'] : bgr.endYear}" /></f:facet>
-							<f:facet name="input"><p:inputText id="bgrEndYear" value="#{bgr.endYear}" /></f:facet>
-						</p:cellEditor>
-					</p:column>
-				</p:dataTable>
-				-->
 			</ui:decorate>
 
 			<ui:decorate template="/WEB-INF/decorators/#{coreInfo.decorator}/formbuttonpanel-02.xhtml">
-				<p:commandButton id="startOverButton" action="#{calculateAcademicsScores.button.startOver}" value="#{msgsResearch['calculateAcademicsScores.button.startOver']}" icon="fa fa-fw fa-refresh" />
-				<p:commandButton id="calculateButton" action="#{calculateAcademicsScores.button.calculate}" value="#{msgsResearch['calculateAcademicsScores.button.calculate']}" icon="fa fa-fw fa-calculator" />
+				<p:commandButton id="startOverButton" action="#{calculateAcademicsScoresController.startOver}" value="#{msgsResearch['calculateAcademicsScores.button.startOver']}" icon="fa fa-fw fa-refresh" />
+				<p:commandButton id="calculateButton" action="#{calculateAcademicsScoresController.calculate}" value="#{msgsResearch['calculateAcademicsScores.button.calculate']}" icon="fa fa-fw fa-calculator" />
 			</ui:decorate>
 		</ui:decorate>
 	</ui:define>
