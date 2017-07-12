@@ -52,7 +52,14 @@
 			</plugin>
 		</plugins>
 	</build>
+	<!-- Add this after </build> -->
 	<dependencies>
+		<dependency>
+			<groupId>org.apache.jena</groupId>
+			<artifactId>apache-jena-libs</artifactId>
+			<type>pom</type>
+			<version>3.3.0</version>
+		</dependency>
 		<dependency>
 			<groupId>br.ufes.inf.nemo</groupId>
 			<artifactId>jbutler-wp</artifactId>

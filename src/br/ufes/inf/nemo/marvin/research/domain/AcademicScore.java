@@ -42,5 +42,4 @@ public class AcademicScore {
 	public void setScoreTotal(int scoreTotal) {
 		this.scoreTotal = scoreTotal;
 	}
-	
 }
