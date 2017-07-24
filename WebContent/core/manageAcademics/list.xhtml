@@ -65,8 +65,15 @@
 				</p:column>
 
 				<p:ajax event="rowSelect" update=":listingForm:buttonsGroup" />
-				<p:ajax event="rowUnselect" update=":listingForm:buttonsGroup" />
+				<p:ajax event="rowUnselect" update=":listingForm:buttonsGroup" />	
+		
 			</p:dataTable>
+			
+			<!-- RDF/XML link -->
+			<a style="float: right;"
+				href="#{facesContext.externalContext.requestContextPath}/data/academics">RDF
+			/XML</a>
+			
 			<p:hotkey bind="ctrl+left" handler="goToFirstPage(listingTable);" />
 			<p:hotkey bind="left" handler="goToPreviousPage(listingTable);" />
 			<p:hotkey bind="right" handler="goToNextPage(listingTable);" />
