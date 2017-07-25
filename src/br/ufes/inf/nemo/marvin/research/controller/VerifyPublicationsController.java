@@ -84,6 +84,7 @@ public class VerifyPublicationsController extends JSFController {
 			logger.log(Level.INFO, "Searching for publications of " + selectedResearcher.getName() + "...");
 			linkedPublications = new LinkedList<LinkedPublication>();
 			List<Publication> researcherPublications = listPublicationsService.listPublicationsByAcademic(selectedResearcher);
+			
 			for (Publication p : researcherPublications) {
 				LinkedPublication lp = new LinkedPublication(p, "No URI available.");
 				linkedPublications.add(lp);

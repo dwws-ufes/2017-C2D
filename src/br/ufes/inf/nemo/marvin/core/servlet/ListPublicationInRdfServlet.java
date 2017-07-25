@@ -26,13 +26,15 @@ import org.apache.jena.vocabulary.RDFS;
 
 import br.ufes.inf.nemo.marvin.core.domain.Academic;
 import br.ufes.inf.nemo.marvin.core.persistence.AcademicDAO;
+import br.ufes.inf.nemo.marvin.research.domain.ConferencePaper;
+import br.ufes.inf.nemo.marvin.research.domain.JournalPaper;
 import br.ufes.inf.nemo.marvin.research.domain.Publication;
 import br.ufes.inf.nemo.marvin.research.persistence.PublicationDAO;
 
 /**
  * Servlet implementation class ListPackagesInRdfServlet
  */
-@WebServlet(urlPatterns = "/data/academics")
+@WebServlet(urlPatterns = { "/data/academics" } )
 public class ListPublicationInRdfServlet extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
@@ -58,38 +60,64 @@ public class ListPublicationInRdfServlet extends HttpServlet {
 		
 		Model model = ModelFactory.createDefaultModel();
 	
-		String myNS = "http://localhost:8080/c2d/data/academics/";
-		//String dblpNS = "http://dblp.uni-trier.de/rdf/schema#";
-		String dblpNS = "http://xmlns.com/foaf/0.1/";
+		String myNSAcademic = "http://localhost:8080/c2d/data/Academic/";
+		String myNSPublication = "http://localhost:8080/c2d/data/Publication/";
+		String dblpNS = "http://dblp.uni-trier.de/rdf/schema#";
 		
-		model.setNsPrefix("dblpgr", dblpNS);
+		model.setNsPrefix("dblp", dblpNS);
 	
+		//Resource and properties of Author
 		Resource rAuthor = ResourceFactory.createResource(dblpNS + "Person");
+		Property fullPersonName = ResourceFactory.createProperty(dblpNS + "fullPersonName");
+		Property creatorOf = ResourceFactory.createProperty(dblpNS + "creatorOf");
 		
-		//Property fullPersonName = ResourceFactory.createProperty(dblpNS + "fullPersonName");
-		//Property homepage = ResourceFactory.createProperty(dblpNS + "homepage");
-		//Property authorOf = ResourceFactory.createProperty(dblpNS + "authorOf");
+		//Resource and properties of Publication
+		Resource rPublication = ResourceFactory.createResource(dblpNS + "Publication");
+		Property title = ResourceFactory.createProperty(dblpNS + "title");
+		Property publicationType = ResourceFactory.createProperty(dblpNS + "publicationType");
+		Property createdBy = ResourceFactory.createProperty(dblpNS + "createdBy");
 		
-		for(Academic academic : academics) {
-			model.createResource(myNS + academic.getId())
-			.addProperty(RDF.type, rAuthor)
-			.addProperty(RDFS.label, academic.getName());
-			
-			
-			
-			logger.log(Level.INFO, "Added acadmics/" + academic.getId() + " to the RDF model");
+		//Resource and properties of PublicationType
+		Resource rArticle = ResourceFactory.createResource(dblpNS + "Article");
+		Resource rInproceedings = ResourceFactory.createResource(dblpNS + "Inproceedings");
 		
-		}
 		
-/*		
 		for(Publication publication : publications) {
-			model.createResource(myNS + publication.getId());	
+			Academic academic = publication.getOwner();
+			Resource publResource = model.createResource(myNSPublication + publication.getId())
+					.addProperty(RDF.type, rPublication)
+					.addProperty(title, publication.getTitle());
 			
-			//TODO
-			logger.log(Level.INFO, "Added publications/" + publication.getId() + " to the RDF model");
-		
+			if(publication instanceof JournalPaper) {
+				publResource.addProperty(publicationType, 
+						model.createResource()
+						.addProperty(RDF.type, rArticle))
+				;
+			}
+			
+			else  if(publication instanceof ConferencePaper) { 
+					publResource.addProperty(publicationType, 
+							model.createResource()
+							.addProperty(RDF.type, rInproceedings));
+			}
+			
+			Resource acadResource =	model.createResource(myNSAcademic + academic.getId())
+			.addProperty(RDF.type, rAuthor)
+			.addProperty(fullPersonName, academic.getName())
+			.addProperty(creatorOf, publResource);
+			academics.remove(academic);
+			
+			//publResource.addProperty(createdBy, acadResource);
+			publResource.addProperty(createdBy, model.createResource()
+							.addProperty(RDF.type, acadResource));
+			
+			logger.log(Level.INFO, "Added publication/" + publication.getId() + " to the RDF model");
+			logger.log(Level.INFO, "Added academic/" + academic.getId() + " to the RDF model");
 		}
-*/	
+		
+		try (PrintWriter out = resp.getWriter()) {
+			model.write(out, "RDF/XML");
+		}
 	}
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)

@@ -34,7 +34,7 @@
 				<p:column headerText="#{msgsResearch['createNewScoreSystem.field.conference']}">
 					<p:cellEditor>
 					    <f:facet name="output">
-					    	<h:outputText value="#{score.scoreConference}" />
+						    	<h:outputText value="#{score.scoreConference}" />
 					    </f:facet>
 	               	   <f:facet name="input">
 	               	   		<p:inputNumber id="scoreConference" thousandSeparator="" decimalPlaces="0" required="true" value="#{score.scoreConference}" />
@@ -54,7 +54,7 @@
 			</p:dataTable>
 
 			<ui:decorate template="/WEB-INF/decorators/#{coreInfo.decorator}/formbuttonpanel-04.xhtml">
-				<p:commandButton id="saveButton" action="#{createNewScoreSystemController.save}" value="#{msgsResearch['createNewScoreSystem.button.save']}" icon="fa fa-fw fa-save" />
+				<p:commandButton id="saveButton" action="#{createNewScoreSystemController.save}" value="#{msgsResearch['createNewScoreSystem.button.save']}" icon="fa fa-fw fa-save"/>
 
 			</ui:decorate>
 		</ui:decorate>
