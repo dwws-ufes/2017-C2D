@@ -42,6 +42,7 @@
 
 			<p:ajax event="rowSelect" oncomplete="PF('publicationDialog').show()" update="publicationTable,academicScoreText" listener="#{calculateAcademicsScoresController.onRowSelect}" />
 		</p:dataTable>
+		
 		<ui:decorate
 			template="/WEB-INF/decorators/#{coreInfo.decorator}/formbuttonpanel-01.xhtml">
 			<p:commandButton id="startOverButton"
@@ -49,10 +50,11 @@
 				value="#{msgsResearch['calculateAcademicsScores.button.startOver']}"
 				icon="fa fa-fw fa-refresh" />
 		</ui:decorate>
+		
 		<p:dialog
 			header="#{msgsResearch['calculateAcademicsScores.modal.title']}"
 			widgetVar="publicationDialog" modal="true"
-			closable="false" width="50%" height="500px"
+			closable="false" closeOnEscape="true" width="50%" height="500px"
 			>
 			<h3>
 				<h:outputFormat id="academicScoreText"
@@ -61,6 +63,7 @@
 						value="#{calculateAcademicsScoresController.selectedAcademicScore.academic.name}" />
 				</h:outputFormat>
 			</h3>
+			
 			<p:dataTable id="publicationTable"
 				value="#{calculateAcademicsScoresController.publicationScores}"
 				var="publicationScore"
@@ -88,15 +91,34 @@
 					headerText="#{msgsResearch['calculateAcademicsScores.field.year']}">
 					<h:outputText value="#{publicationScore.publication.year}" />
 				</p:column>
-
+				
+				<p:column
+					headerText="#{msgsResearch['calculateAcademicsScores.field.qualis']}">
+					<h:outputText value="#{publicationScore.qualis.level}" />
+				</p:column>
+				
 				<p:column
 					headerText="#{msgsResearch['calculateAcademicsScores.field.score']}">
 					<h:outputText value="#{publicationScore.score}" />
 				</p:column>
 			</p:dataTable>
+			
+			<!-- 
+			<h: commandLink>
+				<h:graphicImage url="./resources/marvin/images/icons/pdf-512.png">
+                <p:dataExporter type="csv" target="publicationTable" fileName="scoreTable"/>
+			</h: commandLink>
+			
+			<h: commandLink>
+				<h:graphicImage url="./resources/marvin/images/icons/pdf-512.png">
+                <p:dataExporter type="pdf" target="publicationTable" fileName="scoreTable"/>
+			</h: commandLink>			
+			 -->>
+			
 			<p:commandButton
 				value="#{msgsResearch['calculateAcademicsScores.modal.button.back']}"
 				type="button" onclick="PF('publicationDialog').hide();" />
+				
 		</p:dialog>
 	</ui:define>
 </ui:composition>

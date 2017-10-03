@@ -16,7 +16,7 @@ public class Venue extends PersistentObjectSupport implements Comparable<Venue> 
 	private String acronym;
 	
 	private String issn;
-		
+			
 	@NotNull
 	private String name;
 	
@@ -52,6 +52,16 @@ public class Venue extends PersistentObjectSupport implements Comparable<Venue> 
 		this.issn = issn;
 	}
 	
+	/*
+	public Qualis getQualis() {
+		return qualis;
+	}
+	
+
+	public void setQualis(Qualis qualis) {
+		this.qualis = qualis;
+	}
+	*/
 	public String getName() {
 		return name;
 	}
@@ -85,6 +95,4 @@ public class Venue extends PersistentObjectSupport implements Comparable<Venue> 
 		return cmp;
 	}
 
-
-	
 }

@@ -5,6 +5,7 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.Future;
 
 import javax.ejb.Local;
 
@@ -31,7 +32,7 @@ public interface ImportQualisDataService extends Serializable {
 	List<QualifiedVenue> importQualisData(InputStream inputStream, VenueCategory category)
 			throws CSVParseException, QualisLevelNotRegisteredException;
 	
-	void assignQualificationsToVenues(List<QualifiedVenue> qualifiedVenues, int year);
+	Future<String> assignQualificationsToVenues(List<QualifiedVenue> qualifiedVenues, int year);
 
 
 

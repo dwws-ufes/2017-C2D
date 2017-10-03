@@ -28,6 +28,7 @@ import br.ufes.inf.nemo.marvin.core.domain.Academic;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "class", discriminatorType = DiscriminatorType.CHAR)
 @DiscriminatorValue("0")
+
 public abstract class Publication extends PersistentObjectSupport implements Comparable<Publication> {
 	/** Serialization id. */
 	private static final long serialVersionUID = 1L;

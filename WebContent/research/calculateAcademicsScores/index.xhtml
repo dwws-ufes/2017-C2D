@@ -48,8 +48,9 @@
 			</ui:decorate>
 
 			<ui:decorate template="/WEB-INF/decorators/#{coreInfo.decorator}/formbuttonpanel-02.xhtml">
-				<p:commandButton id="startOverButton" action="#{calculateAcademicsScoresController.startOver}" value="#{msgsResearch['calculateAcademicsScores.button.startOver']}" icon="fa fa-fw fa-refresh" />
 				<p:commandButton id="calculateButton" action="#{calculateAcademicsScoresController.calculate}" value="#{msgsResearch['calculateAcademicsScores.button.calculate']}" icon="fa fa-fw fa-calculator" />
+				<p:commandButton id="startOverButton" action="#{calculateAcademicsScoresController.startOver}" value="#{msgsResearch['calculateAcademicsScores.button.startOver']}" icon="fa fa-fw fa-refresh" />
+				
 			</ui:decorate>
 		</ui:decorate>
 	</ui:define>

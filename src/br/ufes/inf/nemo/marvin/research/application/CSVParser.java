@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import br.ufes.inf.nemo.marvin.research.domain.Qualis;
 import br.ufes.inf.nemo.marvin.research.domain.Venue;
 import br.ufes.inf.nemo.marvin.research.domain.VenueCategory;
 import br.ufes.inf.nemo.marvin.research.exceptions.CSVParseException;
@@ -34,7 +35,9 @@ public class CSVParser {
 				//Discards the header first
 				line = reader.readLine();
 				String[] values = line.split(csvSplitBy);
+				
 				venuesMap = new HashMap<Venue,String>();
+				
 				while (line != null) {
 					
 					values = line.split(csvSplitBy);
@@ -42,6 +45,7 @@ public class CSVParser {
 						Venue v = new Venue(values[1].trim());
 						v.setAcronym(values[0].trim());
 						venuesMap.put(v, values[3].trim());
+
 						line = reader.readLine();
 					}
 					else if(values.length == 3 && category.equals(VenueCategory.JOURNAL)){

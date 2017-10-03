@@ -8,10 +8,13 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.Future;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.annotation.security.RolesAllowed;
+import javax.ejb.AsyncResult;
+import javax.ejb.Asynchronous;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.ejb.Stateless;
@@ -106,7 +109,8 @@ public class ImportQualisDataServiceBean implements ImportQualisDataService {
 	}
 
 	@Override
-	public void assignQualificationsToVenues(List<QualifiedVenue> qualifiedVenues, int year) {
+	@Asynchronous
+	public Future<String> assignQualificationsToVenues(List<QualifiedVenue> qualifiedVenues, int year) {
 		
 		Map<Venue, Qualification> venueQualifications = new HashMap<Venue, Qualification>();
 		for (Qualification q : qualificationDAO.retrieveByYear(year)) {
@@ -134,6 +138,7 @@ public class ImportQualisDataServiceBean implements ImportQualisDataService {
 		}
 		
 		venuesImportEvent.fire(new VenuesImportEvent()); 
+		return new AsyncResult<String>("COMPLETE");
 	}
 
 }

@@ -3,7 +3,10 @@ package br.ufes.inf.nemo.marvin.research.application;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Future;
 
+import javax.ejb.AsyncResult;
+import javax.ejb.Asynchronous;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.enterprise.event.Observes;
@@ -30,6 +33,7 @@ public class MatchPublicationsVenuesServiceBean implements MatchPublicationsVenu
 	private VenueDAO venueDAO;
 
 	@Override
+	//@Asynchronous
 	public void matchPublicationsVenues(@Observes VenuesImportEvent event) {
 		// TODO Auto-generated method stub
 		System.out.println("Matching publications with venues.");
@@ -79,6 +83,8 @@ public class MatchPublicationsVenuesServiceBean implements MatchPublicationsVenu
 				}
 			}
 		}
+		//asynchronous method
+		//return new AsyncResult<String>("COMPLETE");
 	}
 
 }

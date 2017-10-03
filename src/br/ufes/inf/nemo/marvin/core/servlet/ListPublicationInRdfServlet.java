@@ -107,7 +107,6 @@ public class ListPublicationInRdfServlet extends HttpServlet {
 			.addProperty(creatorOf, publResource);
 			academics.remove(academic);
 			
-			//publResource.addProperty(createdBy, acadResource);
 			publResource.addProperty(createdBy, model.createResource()
 							.addProperty(RDF.type, acadResource));
 			

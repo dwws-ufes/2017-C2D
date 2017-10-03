@@ -3,10 +3,13 @@ package br.ufes.inf.nemo.marvin.research.application;
 import java.io.InputStream;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.Future;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.annotation.security.RolesAllowed;
+import javax.ejb.AsyncResult;
+import javax.ejb.Asynchronous;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.ejb.Stateless;
@@ -91,7 +94,8 @@ public class UploadLattesCVServiceBean implements UploadLattesCVService {
 	 *      br.ufes.inf.nemo.marvin.core.domain.Academic)
 	 */
 	@Override
-	public void assignPublicationsToAcademic(Set<Publication> publications, Academic owner) {
+	@Asynchronous
+	public Future<String> assignPublicationsToAcademic(Set<Publication> publications, Academic owner) {
 		// Delete the previous publications of the academic.
 		List<Publication> previousPublications = publicationDAO.retrieveByAcademic(owner);
 		for (Publication previous : previousPublications) publicationDAO.delete(previous);
@@ -104,5 +108,6 @@ public class UploadLattesCVServiceBean implements UploadLattesCVService {
 		}
 		
 		venuesImportEvent.fire(new VenuesImportEvent());
+		return new AsyncResult<String>("COMPLETE");
 	}
 }

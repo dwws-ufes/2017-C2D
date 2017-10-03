@@ -3,6 +3,7 @@ package br.ufes.inf.nemo.marvin.research.application;
 import java.io.InputStream;
 import java.io.Serializable;
 import java.util.Set;
+import java.util.concurrent.Future;
 
 import javax.ejb.Local;
 
@@ -34,6 +35,7 @@ public interface UploadLattesCVService extends Serializable {
 	 * 
 	 * @param publications
 	 * @param owner
+	 * @return 
 	 */
-	void assignPublicationsToAcademic(Set<Publication> publications, Academic owner);
+	Future<String> assignPublicationsToAcademic(Set<Publication> publications, Academic owner);
 }

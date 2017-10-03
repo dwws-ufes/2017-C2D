@@ -63,7 +63,6 @@ public class CalculateAcademicsScoresServiceBean implements CalculateAcademicsSc
 				scoreQualisMap.put(s.getQualis(), s);
 			}
 
-
 			List<AcademicScore> academicScoreList = new ArrayList<AcademicScore>();
 			for(Academic a : academics) {
 				AcademicScore as = new AcademicScore();
@@ -78,7 +77,9 @@ public class CalculateAcademicsScoresServiceBean implements CalculateAcademicsSc
 
 				for(Publication p : publicationsList) {
 					Venue pubVenue = p.getVenue();
-					if (pubVenue == null) continue; //No way of calculating the score of publications without associated venues.
+					
+					//No way to calculating the score of publications without associated venues
+					if (pubVenue == null) continue;
 					try {
 						Qualification quaPubVenue = qualificationDAO.retrieveClosestByVenueAndYear(pubVenue, p.getYear());
 						PublicationScore publicationScore = new PublicationScore();
@@ -91,7 +92,8 @@ public class CalculateAcademicsScoresServiceBean implements CalculateAcademicsSc
 						
 						Qualis qualis = quaPubVenue.getQualis();
 						Score score = scoreQualisMap.get(qualis);
-	
+						publicationScore.setQualis(qualis);
+						
 						if(venueIsConference)
 							currentScore += score.getScoreConference();
 						else 
@@ -125,17 +127,18 @@ public class CalculateAcademicsScoresServiceBean implements CalculateAcademicsSc
 				academicScoreList.add(as);
 			}
 			return academicScoreList;
+			
 		} catch (PersistentObjectNotFoundException e) {
 			// If there is no Score System that is currently active, throw an
 			// exception from the domain.
 			logger.log(Level.WARNING,
 					"No currently active score system was found.");
 			throw new ScoreSystemNotRegisteredException();
+		
 		} catch (MultiplePersistentObjectsFoundException e) {
 			// This is a bug. Log and throw a runtime exception.
 			logger.log(Level.SEVERE, "Multiple score systems found that are currently active.", e);
 			throw new EJBException(e);
 		}
 	}
-
 }
